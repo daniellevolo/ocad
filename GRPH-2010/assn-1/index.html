@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="https://fonts.googleapis.com/css2?family=Fragment+Mono&display=swap" rel="stylesheet">
+
+<title>After the Archive</title>
+
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    /* font-family: Arial, sans-serif; */
+    font-family: 'Fragment Mono', monospace;
+}
+
+/* ================= NAVIGATION ================= */
+header {
+    position: absolute;
+    top: 0;
+    width: 100%;
+    padding: 25px 60px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 10;
+}
+
+.logo {
+    color: white;
+    font-size: 18px;
+    letter-spacing: 2px;
+}
+
+nav a {
+    color: white;
+    text-decoration: none;
+    margin-left: 40px;
+    font-size: 14px;
+    letter-spacing: 1px;
+}
+
+nav a:hover {
+    opacity: 0.7;
+}
+
+/* ================= HERO ================= */
+.hero {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    overflow: hidden;
+}
+
+/* Slides wrapper */
+.slides {
+    display: flex;
+    height: 100%;
+    transition: transform 1s ease;
+}
+
+/* Each slide */
+.slide {
+    min-width: 100%;
+    height: 100vh;
+    background-size: cover;
+    background-position: center;
+}
+
+/* 5 Separate Images */
+.slide:nth-child(1) {
+    background-image:  url("images/slide-image-1.png");
+}
+.slide:nth-child(2) {
+    background-image: url("images/slide-image-2.png");
+}
+.slide:nth-child(3) {
+    background-image: url("images/slide-image-3.png");
+}
+.slide:nth-child(4) {
+    background-image: url("images/slide-image-4.png");;
+}
+.slide:nth-child(5) {
+    background-image: url("images/slide-image-5.png");
+}
+
+/* Dark overlay */
+.hero::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: rgba(0,0,0,0.35);
+    z-index: 1;
+}
+
+/* Hero Text */
+.hero-content {
+    position: absolute;
+    top: 50%;
+    left: 80px;
+    transform: translateY(-50%);
+    color: white;
+    z-index: 2;
+    max-width: 600px;
+}
+
+.hero-content h1 {
+    font-size: 60px;
+    margin-bottom: 20px;
+}
+
+.hero-content p {
+    margin-bottom: 30px;
+}
+
+/* Buttons */
+.button {
+    display: inline-block;
+    padding: 12px 24px;
+    border: 1px solid white;
+    color: white;
+    text-decoration: none;
+    margin-right: 20px;
+    transition: 0.3s;
+}
+
+.button:hover {
+    background: white;
+    color: black;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+    <div class="logo">After the Archive</div>
+    <nav>
+        <a href="#">About</a>
+        <a href="#">Archive</a>
+        <a href="#">Recreate & Shop the Look</a>
+    </nav>
+</header>
+
+<section class="hero">
+    <div class="slides" id="slides">
+        <div class="slide"></div>
+        <div class="slide"></div>
+        <div class="slide"></div>
+        <div class="slide"></div>
+        <div class="slide"></div>
+
+        <!-- Clone of first slide -->
+        <div class="slide"></div>
+    </div>
+
+    <div class="hero-content">
+        <h1>After the Archive</h1>
+        <p>Explore the eras. Recreate the silhouette.</p>
+        <a href="#" class="button">Explore Archive</a>
+        <a href="#" class="button">Recreate the Look</a>
+    </div>
+</section>
+
+
+<script>
+const slides = document.getElementById("slides");
+let index = 0;
+const total = 5; // real slides (NOT including clone)
+
+function moveSlide() {
+    index++;
+    slides.style.transition = "transform 1s ease";
+    slides.style.transform = `translateX(-${index * 100}%)`;
+
+    if (index === total) {
+        setTimeout(() => {
+            slides.style.transition = "none";
+            slides.style.transform = "translateX(0)";
+            index = 0;
+        }, 1000);
+    }
+}
+
+setInterval(moveSlide, 5000);
+</script>
+
+
+</body>
+</html>
