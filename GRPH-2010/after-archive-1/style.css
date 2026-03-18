@@ -1,0 +1,114 @@
+
+/* reset rule: https://www.youtube.com/watch?v=o05m4q8l7ks */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* font applies to entire page */
+body {
+    font-family: 'Fragment Mono', monospace;
+    font-size: 16px;
+
+    /* background image */
+    min-width: 100%;
+    height: 100vh;
+    background-size: cover;
+    background-position: center;
+    background-image:  url("images/slide-image-1.png");
+}
+
+/*  top frame container with logo and navigation  */
+header {
+    position: absolute;
+    top: 0;
+    width: 100%;
+    padding: 25px 60px;
+    /* allows to layout elements horizontally (header section) https://www.youtube.com/watch?v=wsTv9y931o8 */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 10;
+}
+
+/* logo on header */
+.logo {
+    color: white;
+    font-size: 18px;
+    letter-spacing: 2px;
+}
+
+/* style applicable to all navigation links */
+nav a {
+    color: white;
+    /* no underline for links */
+    text-decoration: none;
+    margin-left: 40px;
+    font-size: 14px;
+    letter-spacing: 1px;
+}
+
+/* lower opacity by 30% when mouse hovers the link */
+nav a:hover {
+    opacity: 0.7;
+}
+
+/* styles applicable to main content of the page   */
+.main-content {
+    position: relative;
+    width: 100%;
+    /* use entire visible height (vh) for different devices: https://www.youtube.com/watch?v=o05m4q8l7ks */
+    min-height: 100vh;
+    /* hide scroll bars */
+    overflow: hidden;
+}
+
+/* creates dark overlay (https://blog.logrocket.com/css-overlay/#:~:text=A%20common%20way%20to%20create,an%20additional%20wrapper.) */
+.main-content::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: rgba(0,0,0,0.35);
+    /* over sits above background but under text */
+    z-index: 1;
+}
+
+/* applicable to main content box */
+.content {
+    position: absolute;
+    top: 50%;
+    left: 80px;
+    transform: translateY(-50%);
+    color: white;
+    /* ensure text sits above overlay */
+    z-index: 2;
+    max-width: 600px;
+}
+
+/* applicable to all header 1 tags */
+.content h1 {
+    font-size: 60px;
+    margin-bottom: 20px;
+}
+
+/* applicable to all paragraphs (p) */
+.content p {
+    margin-bottom: 30px;
+}
+
+/* clickable text buttons */
+.button {
+    display: inline-block;
+    padding: 12px 24px;
+    border: 1px solid white;
+    color: white;
+    text-decoration: none;
+    margin-right: 20px;
+    transition: 0.3s;
+}
+
+.button:hover {
+    background: white;
+    color: black;
+}
