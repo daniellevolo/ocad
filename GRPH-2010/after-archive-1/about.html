@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Fragment+Mono&display=swap" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="script.js"></script>
+
+    <title>About</title>
+</head>
+
+<body class="invert-color">
+    <!-- top frame containing logo and navigation bar -->
+    <header>
+        <div class="logo"><a href="index.html">After the Archive</a></div>
+        <!-- hamburger button, visible only on mobile -->
+        <button class="hamburger" aria-label="Toggle menu">&#9776;</button>
+        <!-- navigation with links (a) to sub pages, reference URL (href) -->
+        <nav>
+            <ul>
+                <li>
+                    <a href="about.html">About</a>
+                </li>
+                <li>
+                    <a href="#">Enter Archive</a>
+                    <ul class="submenu">
+                        <li><a href="archive-1900s.html">1900/10s</a></li>
+                        <li><a href="archive-1920s.html">1920/30s</a></li>
+                        <li><a href="archive-1940s.html">1940/50s</a></li>
+                        <li><a href="archive-1960s.html">1960/70s</a></li>
+                        <li><a href="archive-1980s.html">1980/90s</a></li>
+                        <li><a href="archive-2000s.html">2000/2010s</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- main page content -->
+    <section class="main-content-about">
+        <div class="about-img-wrapper">
+            <img src="images/about-img.jpg" />
+            <span class="about-img-label">About</span>
+        </div>
+        <div class="about-text-block">
+            <div class="about-desc">Fashion has always been documented — in photographs, on runways, in magazines. After the Archive collects those moments by decade, from 1900 to the present, and lets the visuals do the talking themselves.</div>
+            <a href="archive-index.html" class="button about-button">Enter Archive</a>
+        </div>
+
+    </section>
+
+</body>
+
+</html>

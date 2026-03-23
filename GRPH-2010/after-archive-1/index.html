@@ -1,38 +1,83 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link rel="stylesheet" href="style.css">
-<link href="https://fonts.googleapis.com/css2?family=Fragment+Mono&display=swap" rel="stylesheet">
 
-<title>After the Archive</title>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Fragment+Mono&display=swap" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <!-- script jQuery: loads the jQuery library from CDN, used for hamburger toggle -->
+    <script src="script.js"></script>
+ 
+
+    <title>After the Archive</title>
 </head>
 
-<body>
+<body id="main-page">
+
     <!-- top frame containing logo and navigation bar -->
-<header>
-    <div class="logo">After the Archive</div>
-    <!-- navigation with links (a) to sub pages, reference URL (href) -->
-    <nav>
-        <a href="#">About</a>
-        <a href="#">Enter Archive</a>
-    </nav>
-</header>
+    <header>
+         <!-- <a> makes logo a clickable link back to the home page -->
+        <div class="logo"><a href="index.html">After the Archive</a></div>
+       
+        <!-- hamburger button, visible only on mobile -->
+        <button class="hamburger" aria-label="Toggle menu">&#9776;</button>
+        <!-- button.hamburger: the ☰ hamburger icon shown only on mobile; aria-label describes it for screen readers -->
+        <!-- navigation with links (a) to sub pages, reference URL (href) -->
+        <nav>
+        <!-- nav: semantic landmark for the site navigation -->
+            <ul>
+            <!-- ul: unordered list of top-level navigation items -->
+                <li>
+                <!-- li: a single navigation item -->
+                    <a href="about.html">About</a>
+                    <!-- a: link to the About page -->
+                </li>
+                <li>
+                <!-- li: the "Enter Archive" item, which has a dropdown submenu -->
+                    <a href="#">Enter Archive</a>
+                    <!-- a href="#": placeholder link that triggers the submenu on hover; # keeps the user on the current page -->
+                    <ul class="submenu">
+                    <!-- ul.submenu: dropdown list of era links; hidden by default, shown on li:hover -->
+                        <li><a href="archive-1900s.html">1900/10s</a></li>
+                        <!-- li > a: submenu item linking to the 1900/10s era archive page -->
+                        <li><a href="archive-1920s.html">1920/30s</a></li>
+                        <!-- li > a: submenu item linking to the 1920/30s era archive page -->
+                        <li><a href="archive-1940s.html">1940/50s</a></li>
+                        <!-- li > a: submenu item linking to the 1940/50s era archive page -->
+                        <li><a href="archive-1960s.html">1960/70s</a></li>
+                        <!-- li > a: submenu item linking to the 1960/70s era archive page -->
+                        <li><a href="archive-1980s.html">1980/90s</a></li>
+                        <!-- li > a: submenu item linking to the 1980/90s era archive page -->
+                        <li><a href="archive-2000s.html">2000/2010s</a></li>
+                        <!-- li > a: submenu item linking to the 2000/2010s era archive page -->
+                    </ul>
+                </li>
+            </ul>
+        </nav>
+    </header>
 
-<!-- main page content -->
-<section class="main-content">
-    <div class="slides" id="slides">
-        <div class="slide" id="slide1"></div>
-    </div>
+    <!-- main page content -->
+    <section class="main-content">
+    <!-- section.main-content: wraps the hero area containing the background image and the text overlay -->
 
-    <div class="content">
-        <h1>After the Archive</h1>
-        <p>A visual archive of fashion<br>
-        from 1900 to the present.</p>
-        <a href="#" class="button">Explore Archive</a>
-    </div>
-</section>
+        <div class="content">
+        <!-- div.content: the text box centred vertically over the slider; sits above the dark overlay via z-index -->
+            <h1>After the Archive</h1>
+            <!-- h1: main page heading, the site's hero title -->
+            <p>A visual archive of fashion<br>
+            <!-- p: short tagline paragraph -->
+                from 1900 to the present.</p>
+                <!-- br: line break to split the tagline across two lines -->
+            <!-- link to the archive index page -->
+            <a href="archive-index.html" class="button">Explore Archive</a> 
+            <!-- a.button: styled call-to-action link that takes the user to the era grid (archive-index.html) -->
+        </div>
+    </section>
 
 </body>
+<!-- /body: end of visible page content -->
+
 </html>
+<!-- /html: end of document -->

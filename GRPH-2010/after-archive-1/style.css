@@ -1,114 +1,428 @@
 
 /* reset rule: https://www.youtube.com/watch?v=o05m4q8l7ks */
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+    margin: 0;              
+    padding: 0;             
+    box-sizing: border-box; /* make width/height include padding and border, not add to them */
 }
 
 /* font applies to entire page */
 body {
-    font-family: 'Fragment Mono', monospace;
-    font-size: 16px;
+    font-family: 'Fragment Mono', monospace; 
+    font-size: 16px;                           /* base text size */
+    color: white;                            /* default text colour on dark backgrounds */
 
     /* background image */
-    min-width: 100%;
-    height: 100vh;
-    background-size: cover;
-    background-position: center;
-    background-image:  url("images/slide-image-1.png");
+    min-width: 100%;             /* prevent body from shrinking narrower than the viewport */
+    height: 100vh;               /* body fills the full visible viewport height */
+    background-size: cover;      
+    background-position: center; 
+}
+
+a {
+    color: white;              /* links default to white to match the dark page background */
+    text-decoration: none;       /* no underline for links */
+}
+
+/* '#<name>' <name> portion refers to the id attribute of an html tag/element */
+#main-page {
+    background-image: url("images/slide-image-1.png"); 
+}
+
+#archive-page {
+    background-color: black; 
+}
+
+.invert-color {
+    background-color: white;    /* white page background (used on About page) */
+    color: black;               /* flip text to black so it reads on the white background */
+}
+
+/* links also flip to black to stay readable on white backgrounds */
+.invert-color a {
+    color: black; 
+}
+
+/* hanburger button for mobile */
+/* hamburger button is white by default; make it black on light-background pages */
+.invert-color .hamburger {
+    color: black;
+}
+
+#archive-detail-page h1 {
+    padding-bottom: 0px;          /* cancel any default bottom padding on archive era headings */
+    margin-bottom: 30px;          /* add controlled space between the h1 and the content below it */
 }
 
 /*  top frame container with logo and navigation  */
 header {
-    position: absolute;
-    top: 0;
-    width: 100%;
-    padding: 25px 60px;
+    position: absolute;          
+    top: 0;                      /* anchor it to the very top of its positioned parent */
+    width: 100%;                 
+    padding: 25px 60px;          
     /* allows to layout elements horizontally (header section) https://www.youtube.com/watch?v=wsTv9y931o8 */
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    z-index: 10;
+    display: flex;               
+    justify-content: space-between; 
+    align-items: center;         
+    /* vertical depth of element stacking (like photoshop layers) */
+    z-index: 10;                 
+    /* sit above normal page content but below the mobile nav dropdown */
 }
 
 /* logo on header */
 .logo {
-    color: white;
-    font-size: 18px;
-    letter-spacing: 2px;
+    font-size: 18px;     
+    letter-spacing: 2px; 
+}
+
+/* logo link inherits the surrounding text colour and has no underline */
+.logo a {
+    color: inherit;        /* take the text colour from .logo's parent 
+                           (white on dark pages, black on .invert-color pages) so no separate override is needed */
+    text-decoration: none; 
+}
+
+/* hamburger button — hidden on desktop, shown on mobile */
+.hamburger {
+    display: none;         /* hidden on desktop; the mobile media query overrides this to flex */
+    background: none; 
+    border: none;     
+    color: white;     
+    font-size: 28px;       /* large enough to be an easy tap target on mobile */
 }
 
 /* style applicable to all navigation links */
 nav a {
-    color: white;
-    /* no underline for links */
-    text-decoration: none;
-    margin-left: 40px;
-    font-size: 14px;
-    letter-spacing: 1px;
+    margin-left: 40px;   
+    font-size: 14px;     
+    letter-spacing: 1px;  
 }
 
 /* lower opacity by 30% when mouse hovers the link */
 nav a:hover {
-    opacity: 0.7;
+    opacity: 0.7; /
 }
 
-/* styles applicable to main content of the page   */
-.main-content {
-    position: relative;
-    width: 100%;
-    /* use entire visible height (vh) for different devices: https://www.youtube.com/watch?v=o05m4q8l7ks */
-    min-height: 100vh;
-    /* hide scroll bars */
-    overflow: hidden;
+ul {
+    /* removes the default bullet points */
+    list-style: none; 
+    display: flex;         /* keeps nav items in a row */
 }
+
+li {
+    /* (list item) puts dropdown menu directly under "Enter Archive" */
+    position: relative;
+}
+
+.submenu {
+    display: none;         /* hidden by default before mouse hover */
+    position: absolute;           
+    right: 0;              /* align right edge of submenu */
+    background: white;    
+}
+
+/* links in dropmenu */
+.submenu a {
+    color: black;        
+    padding: 1px 1px;  
+    display: block;        /* make the entire padded area clickable, not just the text */
+    margin-left: 0;      
+}
+
+.submenu a:hover {
+    color: white; 
+    background-color: black;   
+    opacity: 1;            
+}
+
+/* show menu on hover */
+li:hover .submenu {
+    display: block; 
+}
+
 
 /* creates dark overlay (https://blog.logrocket.com/css-overlay/#:~:text=A%20common%20way%20to%20create,an%20additional%20wrapper.) */
 .main-content::before {
-    content: "";
-    position: absolute;
-    inset: 0;
-    background: rgba(0,0,0,0.35);
-    /* over sits above background but under text */
-    z-index: 1;
+    content: "";                 /* required for pseudo-elements — inserts an empty invisible box */
+    position: absolute;     
+    inset: 0;                    /* shorthand for top/right/bottom/left: 0 — covers the full area */
+    background: rgba(0, 0, 0, 0.35); 
 }
 
 /* applicable to main content box */
 .content {
-    position: absolute;
-    top: 50%;
-    left: 80px;
-    transform: translateY(-50%);
-    color: white;
-    /* ensure text sits above overlay */
-    z-index: 2;
-    max-width: 600px;
+    position: absolute;          
+    top: 50%;                    /* initially place the top edge at the vertical midpoint */
+    left: 80px;                  
+    transform: translateY(-50%); /* shift the box up by half its own height to truly centre it vertically */
+    max-width: 600px;            /* keep text in small container */
 }
 
 /* applicable to all header 1 tags */
 .content h1 {
-    font-size: 60px;
-    margin-bottom: 20px;
+    font-size: 60px;     
+    margin-bottom: 20px; 
 }
 
 /* applicable to all paragraphs (p) */
 .content p {
-    margin-bottom: 30px;
+    margin-bottom: 40px; 
 }
 
 /* clickable text buttons */
 .button {
-    display: inline-block;
-    padding: 12px 24px;
-    border: 1px solid white;
-    color: white;
-    text-decoration: none;
-    margin-right: 20px;
-    transition: 0.3s;
+    padding: 12px 24px;       
+    border: 1px solid white;  
+    color: white;             
+    text-decoration: none;    
+    transition: 0.3s;         
 }
 
 .button:hover {
-    background: white;
-    color: black;
+    background: white; 
+    color: black;  
 }
+
+/* all main headings */
+h1 {
+    font-size: 48px;     /* era slides hearders */
+    font-weight: normal; 
+    margin-top: 80px;    
+    margin-bottom: 60px; 
+    letter-spacing: 2px; 
+}
+
+/* details pages era description  */
+h2 {
+    font-size: 24px; 
+    font-weight: normal; 
+}
+
+/* index page grid */
+.grid {
+    display: grid;                           
+    grid-template-columns: repeat(3, 220px); 
+    gap: 60px;                               
+    justify-content: center;                 
+}
+
+/* image-buttons (squares) */
+.image-button {
+    width: 220px;           
+    height: 220px;          
+    background: #d9d9d9;        /* light grey placeholder shown if the background image fails to load */
+    text-decoration: none;  
+    color: black;          
+
+    display: flex;           
+    align-items: flex-end;        /* push the label to the bottom edge of the square */
+    justify-content: center; 
+    padding-bottom: 10px;    
+
+    background-size: cover;       /* scale background image to cover the full 220×220 square */
+    background-position: center;  /* centre the background image within the square */
+    border: 10px solid white; 
+    transition: transform 0.2s ease, opacity 0.2s ease; 
+}
+
+.image-button:hover {
+    transform: scale(1.05); 
+    opacity: 0.9;           
+}
+
+/* text inside */
+.image-button span {
+    background: white;          /* white block behind the era label for legibility over the background image */
+    font-size: 16px;              
+    padding: 5px;                 
+}
+/* era image button thumbnails */
+#img-butt-1 {
+    background-image: url("images/idx-button-1900.png"); 
+}
+
+#img-butt-2 {
+    background-image: url("images/idx-button-1920.png"); 
+}
+
+#img-butt-3 {
+    background-image: url("images/idx-button-1940.png"); 
+}
+
+#img-butt-4 {
+    background-image: url("images/idx-button-1960.png"); 
+}
+
+#img-butt-5 {
+    background-image: url("images/idx-button-1980.png"); 
+}
+
+#img-butt-6 {
+    background-image: url("images/idx-button-2000.png"); 
+}
+
+/* center all archive detail page content */
+.main-content-details {
+    text-align: center; 
+}
+
+/* space between the era description text and the content below it */
+.era-desc {
+    padding-bottom: 20px; 
+}
+
+/* space below hero image */
+.details-heading {
+    margin-bottom: 50px;   
+}
+
+.details-heading img {
+    margin-bottom: 200px; 
+    max-width: 100%;         /* prevent the image from overflowing its container on narrow screens */
+    height: auto;            /* maintain the image's natural aspect ratio as width scales */
+}
+
+/* two captions side by side under a single image */
+.era-captions {
+    display: flex;      
+    gap: 40px;          
+    text-align: center; 
+    font-size: 12px;    
+}
+
+/* equal movement in captions from screen size */
+.era-captions > div {
+    flex: 1;
+}
+
+/* groupings for era references */
+.era-ref {
+    margin-top: 100px;     
+    text-align: center; 
+    width: 70%;         
+    margin-left: auto;        /* combined with margin-right: auto this centres the block horizontally */
+    margin-right: auto;       /* combined with margin-left: auto this centres the block horizontally */
+}
+
+/* each image reference */
+.era-ref img {
+    margin-top: 30px;    
+    margin-bottom: 10px; 
+    max-width: 100%;          /* prevent image from overflowing the 70%-wide .era-ref container */
+}
+
+/* about page */
+.main-content-about {
+    text-align: center;       
+}
+
+.main-content-about img {
+    width: 100%;  
+}
+
+/* align description text below the about image */
+.about-text-block {
+    width: 40%;          
+    margin: 20px auto 0;      /* centre the column horizontally with space above */
+    text-align: left;   
+}
+
+/* space between the description and the button below */
+.about-desc {
+    margin-bottom: 30px; 
+}
+
+/* "Enter Archive" button on the about page — inverted colours to show on white background */
+.about-button {
+    display: inline-block;    /* allow margin spacing while keeping the link inline */
+    border-color: black;   
+    color: black;          
+}
+
+.about-button:hover {
+    background: black; 
+    color: white;      
+}
+
+/* "About" label over image */
+.about-img-wrapper {
+    position: relative;       /* label can be placed always within the image */
+    display: inline-block;    /* shrink-wrap around the image so the wrapper is only as wide as the photo */
+    width: 40%;               
+}
+
+/* "About" text overlay pinned to the bottom of the image */
+.about-img-label {
+    position: absolute;  
+    bottom: 0;               
+    left: 0;                 
+    right: 0;  
+    /* semi-transparent dark band so text is legible over the photo */              
+    background: rgba(0, 0, 0, 0.45); 
+    color: white;        
+    padding: 10px 15px;       /* horizontal padding for left-aligned text */
+    text-align: left;         
+    font-size: 60px;     
+    letter-spacing: 2px; 
+}
+
+
+/* mobile */
+@media screen and (max-width: 480px) {
+
+    /* show hamburger button (for vertical) */
+    .hamburger {
+        display: flex; /* override the desktop display:none to show the hamburger icon on mobile */
+    }
+
+    /* hide nav by default, shown when .open is toggled */
+    nav {
+        display: none;           /* nav is hidden until the hamburger is tapped */
+        position: absolute;      /* pull nav out of flow so it overlays the page when open */
+        top: 100%;               /* drop down immediately below the header bar */
+        left: 0;                 /* stretch from the left edge of the screen */
+        right: 0;                /* stretch to the right edge of the screen */
+        background: white;     
+        /* subtle drop shadow to lift the panel off the page */
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    }
+
+/* jQuery adds this class on hamburger tap to reveal the nav panel */
+    nav.open {
+        display: block;      
+    }
+
+    /* links are now on a white background so use black text */
+    nav a {
+        color: black;   
+        margin-left: 0; 
+    }
+
+    /* stack links vertically */
+    nav ul {
+        flex-direction: column;  /* override the horizontal desktop row to a vertical column */
+        gap: 0;                  /* remove gap between items (padding on <a> provides spacing instead) */
+        padding: 8px 0;          /* small top/bottom breathing room inside the dropdown panel */
+    }
+
+    /* dropbox list */
+    nav ul li a {
+        display: block;          /* make the full row clickable, not just the text */
+        padding: 12px 24px;      
+    }
+
+  
+    
+    li:hover .submenu {
+        padding-left: 4px;         
+        background: white;       
+    }
+    
+    /* full-width photo on mobile instead of the 40% desktop size */
+    .main-content-about img {
+        width: 100%; 
+    
+    }
+
+}
+
