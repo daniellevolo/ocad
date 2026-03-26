@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Fragment+Mono&display=swap" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <!-- script jQuery: loads the jQuery library, used for hamburger toggle -->
+    <script src="script.js"></script>
+ 
+
+    <title>After the Archive</title>
+</head>
+
+<body id="main-page">
+
+    <!-- top frame containing logo and navigation bar -->
+    <header>
+         <!-- <a> makes logo a clickable link back to the home page -->
+        <div class="logo"><a href="index.html">After the Archive</a></div>
+       
+        <!-- hamburger button, visible only on mobile -->
+        <button class="hamburger" aria-label="Toggle menu">&#9776;</button>
+        <!-- button.hamburger: the hamburger icon shown only on mobile; aria-label describes it for screen readers -->
+        <!-- navigation with links (a) to sub pages, reference URL (href) -->
+        <nav>
+        
+            <ul>
+            <!-- ul: unordered list of top-level navigation items -->
+                <li>
+                <!-- li: a single navigation item -->
+                    <a href="about.html">About</a>
+                    <!-- a: link to the About page -->
+                </li>
+                <li>
+                <!-- li: the "Enter Archive" item, which has a dropdown submenu -->
+                    <a href="#">Enter Archive</a>
+                    <ul class="submenu">
+                        <li><a href="archive-1900s.html">1900/10s</a></li>
+                        <li><a href="archive-1920s.html">1920/30s</a></li>
+                        <li><a href="archive-1940s.html">1940/50s</a></li>
+                        <li><a href="archive-1960s.html">1960/70s</a></li>
+                        <li><a href="archive-1980s.html">1980/90s</a></li>
+                        <li><a href="archive-2000s.html">2000/2010s</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- main page content -->
+    <section class="main-content">
+
+        <div class="content">
+            <h1>After the Archive</h1>
+            <p>A visual archive of fashion<br>
+                from 1900 to the present.</p>
+            <!-- link to the archive index page -->
+            <a href="archive-index.html" class="button">Explore Archive</a> 
+            <!-- a.button: link that takes the user to the era grid (archive-index.html) -->
+        </div>
+    </section>
+
+</body>
+
+</html>
