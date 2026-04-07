@@ -1,0 +1,804 @@
+/* References:
+   MDN CSS reference: https://developer.mozilla.org/en-US/docs/Web/CSS/Reference
+   MDN Grid Layout: https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_grid_layout
+   MDN @media: https://developer.mozilla.org/en-US/docs/Web/CSS/@media
+   MDN @keyframes: https://developer.mozilla.org/en-US/docs/Web/CSS/@keyframes
+   MDN animation: https://developer.mozilla.org/en-US/docs/Web/CSS/animation
+   MDN transition: https://developer.mozilla.org/en-US/docs/Web/CSS/transition
+   MDN clamp(): https://developer.mozilla.org/en-US/docs/Web/CSS/clamp
+   MDN overflow: https://developer.mozilla.org/en-US/docs/Web/CSS/overflow
+   MDN position: https://developer.mozilla.org/en-US/docs/Web/CSS/position
+   MDN pointer and focus styling: https://developer.mozilla.org/en-US/docs/Web/CSS/:focus-visible
+   Curated YouTube CSS references:
+   Kevin Powell - CSS Grid Layout Guide
+   https://www.youtube.com/@KevinPowell
+   Traversy Media - CSS Grid Crash Course
+   https://www.youtube.com/@TraversyMedia
+   freeCodeCamp.org - CSS Tutorial / Full Course for Beginners
+   https://www.youtube.com/@freecodecamp
+   CSS Grid Course - The Only Grid Tutorial You'll Ever Need!
+   https://www.youtube.com/watch?v=JYfiaSKeYhE
+   CSS Animation in 100 Seconds 
+   https://www.youtube.com/watch?v=HZHHBwzmJLk
+   Learn CSS Animations in 9 Minutes 
+   https://www.youtube.com/watch?v=z2LQYsZhsFw
+*/
+
+/* Reset spacing on all elements. */
+* {
+  /* Remove default outer spacing. */
+  margin: 0;
+  /* Remove default inner spacing. */
+  padding: 0;
+  /* Include border and padding in layout sizing. */
+  box-sizing: border-box;
+}
+
+/* Apply document-level scrolling behavior. */
+html {
+  /* Smoothly animate in-page scroll jumps. */
+  scroll-behavior: smooth;
+}
+
+/* Define the base page canvas and typography. */
+body {
+  /* Ensure the page is at least one viewport tall. */
+  min-height: 100vh;
+  /* Set the main typeface used across the poster. */
+  font-family: "Space Grotesk", sans-serif;
+  /* Fill the page with the poster blue background. */
+  background: #2b39ad;
+  /* Use an off-white default text color. */
+  color: #f7f8ff;
+}
+
+/* Lock background scroll when a popup is open. */
+body.overlay-open {
+  /* Prevent page scrolling behind overlays. */
+  overflow: hidden;
+}
+
+/* Style the main poster wrapper. */
+.poster-page {
+  /* Establish a containing block for positioned descendants. */
+  position: relative;
+  /* Keep the poster at least viewport height on desktop. */
+  min-height: 100vh;
+}
+
+/* Build the spreadsheet-like poster grid. */
+.poster-table {
+  /* Allow absolutely positioned children to anchor inside the grid. */
+  position: relative;
+  /* Turn the poster into a CSS Grid container. */
+  display: grid;
+  /* Define the left numbering column and five poster columns. */
+  grid-template-columns: 46px minmax(300px, 1.65fr) minmax(240px, 1.45fr) minmax(180px, 1.1fr) minmax(120px, 0.7fr) minmax(180px, 1fr);
+  /* Define the top header row and all numbered poster rows. */
+  grid-template-rows:
+    36px
+    minmax(28px, auto)
+    minmax(56px, auto)
+    minmax(56px, auto)
+    minmax(56px, auto)
+    minmax(56px, auto)
+    minmax(28px, auto)
+    minmax(28px, auto)
+    minmax(28px, auto)
+    minmax(56px, auto)
+    minmax(28px, auto)
+    minmax(28px, auto)
+    minmax(28px, auto)
+    minmax(28px, auto)
+    minmax(56px, auto)
+    minmax(56px, auto)
+    minmax(56px, auto)
+    minmax(56px, auto)
+    minmax(56px, auto)
+    minmax(56px, auto)
+    minmax(56px, auto)
+    minmax(56px, auto);
+  /* Keep the full poster area at least viewport height. */
+  min-height: 100vh;
+}
+
+/* Apply the default visual treatment for every grid cell. */
+.grid-cell {
+  /* Draw the right grid line. */
+  border-right: 1px solid rgba(74, 161, 244, 0.56);
+  /* Draw the bottom grid line. */
+  border-bottom: 1px solid rgba(74, 161, 244, 0.56);
+  /* Allow children to shrink instead of forcing overflow. */
+  min-width: 0;
+  /* Add internal spacing inside each cell. */
+  padding: 7px 9px;
+}
+
+/* Tighten rows that are meant to appear compact. */
+.compact-row {
+  /* Reduce top padding in compact cells. */
+  padding-top: 3px;
+  /* Reduce bottom padding in compact cells. */
+  padding-bottom: 3px;
+}
+
+/* Style the column letters, row numbers, and top-left corner cell. */
+.col-letters,
+.row-numbers,
+.corner {
+  /* Use the dim grid-label color. */
+  color: rgba(247, 248, 255, 0.46);
+  /* Use the monospaced typeface for grid labels. */
+  font-family: "Space Mono", monospace;
+  /* Set the grid-label font size. */
+  font-size: 14px;
+}
+
+/* Add the top border where needed in the header row. */
+.col-letters,
+.corner {
+  /* Draw the top grid line. */
+  border-top: 1px solid rgba(74, 161, 244, 0.56);
+}
+
+/* Add the left border where needed in the first column. */
+.corner,
+.row-numbers {
+  /* Draw the left grid line. */
+  border-left: 1px solid rgba(74, 161, 244, 0.56);
+}
+
+/* Center the column letters, row numbers, and corner marker. */
+.col-letters,
+.row-numbers,
+.corner {
+  /* Use flexbox for centering. */
+  display: flex;
+  /* Center content vertically. */
+  align-items: center;
+  /* Center content horizontally. */
+  justify-content: center;
+}
+
+/* Keep intentionally empty cells visually blank. */
+.empty-cell {
+  /* Explicitly leave the cell background transparent. */
+  background: transparent;
+}
+
+/* Apply a typed reveal animation to selected text fragments. */
+.type-in {
+  /* Keep the animated text as an inline box with box-like layout behavior. */
+  display: inline-block;
+  /* Prevent the animated element from exceeding its container width. */
+  max-width: 100%;
+  /* Run the type-on reveal animation once. */
+  animation: type-in-reveal 520ms steps(18, end) both;
+}
+
+/* Delay the faculty line typing effect. */
+.faculty-cell .type-in {
+  /* Start after a short delay. */
+  animation-delay: 0.15s;
+}
+
+/* Delay the title typing effect slightly more. */
+.title-cell .type-in {
+  /* Start after the faculty line. */
+  animation-delay: 0.35s;
+}
+
+/* Align the title cell contents vertically. */
+.title-cell {
+  /* Use flexbox to position the title. */
+  display: flex;
+  /* Center the title within its row height. */
+  align-items: center;
+}
+
+/* Style the main poster title. */
+.title-cell h1 {
+  /* Scale the title responsively across viewport sizes. */
+  font-size: clamp(27px, 3.6vw, 61px);
+  /* Tighten the heading line spacing. */
+  line-height: 0.92;
+  /* Use a light weight for the title. */
+  font-weight: 300;
+  /* Scale title letter-spacing responsively. */
+  letter-spacing: clamp(4px, 0.6vw, 10px);
+  /* Render the title in uppercase. */
+  text-transform: uppercase;
+}
+
+/* Style the OCAD U brand cell. */
+.ocadu-cell {
+  /* Use flex layout for alignment. */
+  display: flex;
+  /* Center the text vertically in the cell. */
+  align-items: center;
+  /* Align the text to the start on desktop. */
+  justify-content: flex-start;
+  /* Match the color of the grid numbers. */
+  color: rgba(247, 248, 255, 0.46);
+  /* Scale the brand size responsively. */
+  font-size: clamp(32px, 3vw, 53px);
+  /* Italicize the brand text. */
+  font-style: italic;
+  /* Use a medium-light weight. */
+  font-weight: 400;
+  /* Animate the brand on first load. */
+  animation: ocadu-slide-in 1250ms cubic-bezier(0.22, 1, 0.36, 1) 180ms both;
+  /* Hint that transform and opacity will animate. */
+  will-change: transform, opacity;
+}
+
+/* Define the OCAD U slide-in animation. */
+@keyframes ocadu-slide-in {
+  /* Starting state. */
+  from {
+    /* Start invisible. */
+    opacity: 0;
+    /* Start translated left off screen. */
+    transform: translateX(-50vw);
+  }
+
+  /* Ending state. */
+  to {
+    /* End fully visible. */
+    opacity: 1;
+    /* End at the natural position. */
+    transform: translateX(0);
+  }
+}
+
+/* Define the typed reveal animation. */
+@keyframes type-in-reveal {
+  /* Starting state. */
+  from {
+    /* Start transparent. */
+    opacity: 0;
+    /* Clip all text except the far left edge. */
+    clip-path: inset(0 100% 0 0);
+  }
+
+  /* Ending state. */
+  to {
+    /* End fully opaque. */
+    opacity: 1;
+    /* Reveal the entire text. */
+    clip-path: inset(0 0 0 0);
+  }
+}
+
+/* Style the summary copy cell. */
+.summary-cell {
+  /* Use softened white for secondary text. */
+  color: rgba(247, 248, 255, 0.84);
+  /* Set the summary font size. */
+  font-size: 16px;
+  /* Tighten the line spacing. */
+  line-height: 1.1;
+}
+
+/* Style the faculty label cell. */
+.faculty-cell {
+  /* Use softened white for the label. */
+  color: rgba(247, 248, 255, 0.84);
+  /* Match the summary font size. */
+  font-size: 16px;
+  /* Match the summary line height. */
+  line-height: 1.1;
+  /* Add tracking to the faculty label. */
+  letter-spacing: 3px;
+  /* Render the faculty label in uppercase. */
+  text-transform: uppercase;
+}
+
+/* Share typography across event detail text pieces. */
+.event-details,
+.event-label,
+.event-value {
+  /* Use the monospaced face for event metadata. */
+  font-family: "Space Mono", monospace;
+  /* Set the metadata font size. */
+  font-size: 15px;
+}
+
+/* Align the metadata pair wrapper. */
+.event-details {
+  /* Use flexbox for left/right alignment. */
+  display: flex;
+  /* Center metadata vertically. */
+  align-items: center;
+  /* Push label and value to opposite sides. */
+  justify-content: space-between;
+  /* Add horizontal spacing between the two sides. */
+  gap: 16px;
+}
+
+/* Align the metadata inner line. */
+.event-detail {
+  /* Fill the available cell width. */
+  width: 100%;
+  /* Use flexbox for horizontal distribution. */
+  display: flex;
+  /* Center items vertically. */
+  align-items: center;
+  /* Push label and value apart. */
+  justify-content: space-between;
+  /* Maintain a gap between label and value. */
+  gap: 16px;
+  /* Add a touch of right breathing room. */
+  padding-right: 3px;
+  /* Allow flex children to shrink without overflow bugs. */
+  min-width: 0;
+}
+
+/* Make the event labels bold. */
+.event-label {
+  /* Increase weight for the metadata label. */
+  font-weight: 700;
+}
+
+/* Style the event values on the right side. */
+.event-value {
+  /* Let the value shrink if needed. */
+  flex: 0 1 auto;
+  /* Prevent flex overflow issues. */
+  min-width: 0;
+  /* Align the value to the right edge. */
+  text-align: right;
+}
+
+/* Style the interactive speaker buttons. */
+.speaker-button {
+  /* Use flex layout for first and last name alignment. */
+  display: flex;
+  /* Align the names vertically. */
+  align-items: center;
+  /* Add spacing between the first and last name. */
+  gap: 6px;
+  /* Draw the white speaker outline. */
+  border: 1.5px solid rgba(247, 248, 255, 0.9);
+  /* Inset the button slightly from the cell edge. */
+  margin: 3px;
+  /* Add interior spacing inside the button. */
+  padding: 6px 9px 7px;
+  /* Scale the speaker button text responsively. */
+  font-size: clamp(27px, 3vw, 46px);
+  /* Tighten the button line height. */
+  line-height: 1;
+  /* Use a medium weight. */
+  font-weight: 500;
+  /* Inherit the page font family. */
+  font-family: inherit;
+  /* Use the poster off-white as the default button text color. */
+  color: #f7f8ff;
+  /* Align button text to the left. */
+  text-align: left;
+  /* Remove native browser button styling. */
+  appearance: none;
+  /* Remove native Safari button styling. */
+  -webkit-appearance: none;
+  /* Remove the mobile tap flash highlight. */
+  -webkit-tap-highlight-color: transparent;
+  /* Keep the default button fill transparent. */
+  background: transparent;
+  /* Explicitly force the resting background color to transparent. */
+  background-color: transparent;
+  /* Keep the pointer as the regular arrow. */
+  cursor: default;
+  /* Remove the default focus outline. */
+  outline: none;
+  /* Remove any native box shadow. */
+  box-shadow: none;
+  /* Run the entrance animation once. */
+  animation: speaker-pop-in 260ms steps(2, end) both;
+  /* Animate interactive color changes smoothly. */
+  transition: background-color 160ms ease, color 160ms ease, border-color 160ms ease;
+}
+
+/* Delay Vanessa's speaker button entrance. */
+.vanessa-trigger {
+  /* Start after the metadata rows appear. */
+  animation-delay: 1.2s;
+}
+
+/* Delay Kelsey's speaker button entrance. */
+.kelsey-trigger {
+  /* Start slightly after Vanessa. */
+  animation-delay: 1.32s;
+}
+
+/* Delay Anna's speaker button entrance. */
+.anna-trigger {
+  /* Start slightly after Kelsey. */
+  animation-delay: 1.44s;
+}
+
+/* Remove browser focus chrome from the speaker buttons. */
+.speaker-button:focus-visible {
+  /* Prevent outline drawing. */
+  outline: none;
+  /* Prevent box-shadow drawing. */
+  box-shadow: none;
+}
+
+/* Reverse the button colors on hover. */
+.speaker-button:hover {
+  /* Fill the button with off-white. */
+  background: #f7f8ff;
+  /* Explicitly match the hover background color. */
+  background-color: #f7f8ff;
+  /* Swap the text to the poster blue. */
+  color: #2b39ad;
+  /* Match the border to the filled state. */
+  border-color: #f7f8ff;
+}
+
+/* Keep the reverse colors while a popup is open. */
+.speaker-button.is-active {
+  /* Fill the button with off-white. */
+  background: #f7f8ff;
+  /* Explicitly match the active background color. */
+  background-color: #f7f8ff;
+  /* Swap the text to the poster blue. */
+  color: #2b39ad;
+  /* Match the border to the filled state. */
+  border-color: #f7f8ff;
+}
+
+/* Style the surname portion of the speaker button. */
+.speaker-last-name {
+  /* Scale the surname smaller than the first name. */
+  font-size: clamp(12px, 1.32vw, 20px);
+  /* Use a lighter weight for the surname. */
+  font-weight: 400;
+}
+
+/* Define the speaker button pop-in animation. */
+@keyframes speaker-pop-in {
+  /* Starting state. */
+  0% {
+    /* Start invisible. */
+    opacity: 0;
+    /* Start slightly shifted and shrunk. */
+    transform: translateX(-10px) scale(0.96);
+  }
+
+  /* Early overshoot state. */
+  35% {
+    /* Fade in partway. */
+    opacity: 0.45;
+    /* Overshoot to the right and slightly enlarge. */
+    transform: translateX(8px) scale(1.02);
+  }
+
+  /* Settle-back state. */
+  65% {
+    /* Nearly reach full opacity. */
+    opacity: 0.9;
+    /* Shift back left and slightly downscale. */
+    transform: translateX(-3px) scale(0.99);
+  }
+
+  /* Final state. */
+  100% {
+    /* End fully visible. */
+    opacity: 1;
+    /* End at the natural size and position. */
+    transform: translateX(0) scale(1);
+  }
+}
+
+/* Generic hidden utility. */
+.hidden {
+  /* Remove the element from layout and rendering. */
+  display: none;
+}
+
+/* Position and style the speaker popup panel. */
+.speaker-overlay {
+  /* Take the overlay out of normal flow. */
+  position: absolute;
+  /* Span popup columns B through E. */
+  grid-column: 3 / 7;
+  /* Start the popup at row 6 and extend downward. */
+  grid-row: 6 / 18;
+  /* Render above the poster grid. */
+  z-index: 2;
+  /* Stretch to match the chosen grid rows. */
+  align-self: stretch;
+  /* Use grid layout inside the popup. */
+  display: grid;
+  /* Create a header row and content row. */
+  grid-template-rows: auto 1fr;
+  /* Draw the popup border. */
+  border: 1px solid #f7f8ff;
+  /* Use a translucent blue popup background. */
+  background: rgba(20, 31, 115, 0.45);
+  /* Clip content to the popup frame. */
+  overflow: hidden;
+}
+
+/* Ensure hidden popups stay hidden even with popup base styles. */
+.speaker-overlay.hidden {
+  /* Remove hidden popups from layout and rendering. */
+  display: none;
+}
+
+/* Style the popup header row. */
+.overlay-header {
+  /* Use flexbox for header layout. */
+  display: flex;
+  /* Align header items vertically. */
+  align-items: center;
+  /* Space the header index, title, and close button. */
+  gap: 14px;
+  /* Add interior spacing around the header. */
+  padding: 13px 16px;
+  /* Separate the header from the content area. */
+  border-bottom: 1px solid rgba(247, 248, 255, 0.3);
+}
+
+/* Share the monospaced font across popup micro-headings. */
+.overlay-index,
+.overlay-section h3 {
+  /* Use the monospaced face for popup labels. */
+  font-family: "Space Mono", monospace;
+}
+
+/* Style the popup index label. */
+.overlay-index {
+  /* Use a dimmer white for the small index. */
+  color: rgba(247, 248, 255, 0.3);
+}
+
+/* Style the popup title text. */
+.overlay-header h2 {
+  /* Set the popup title size. */
+  font-size: 18px;
+  /* Use a medium weight. */
+  font-weight: 500;
+  /* Add subtle tracking. */
+  letter-spacing: 1px;
+}
+
+/* Style the popup close button. */
+.overlay-close {
+  /* Push the close button to the far right. */
+  margin-left: auto;
+  /* Remove the native border. */
+  border: 0;
+  /* Remove the native background. */
+  background: transparent;
+  /* Use the page text color. */
+  color: #f7f8ff;
+  /* Inherit surrounding font styles. */
+  font: inherit;
+  /* Set the close button size. */
+  font-size: 18px;
+  /* Tighten line height for the close glyph. */
+  line-height: 1;
+  /* Use a pointer cursor on the close control. */
+  cursor: pointer;
+  /* Add a very small click target padding. */
+  padding: 2px 3px;
+}
+
+/* Style the popup content columns. */
+.overlay-columns {
+  /* Use grid layout for the two content columns. */
+  display: grid;
+  /* Create two equal popup text columns. */
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  /* Add spacing between the two columns. */
+  gap: 19px;
+  /* Add interior padding around the popup body. */
+  padding: 16px;
+  /* Let the content scroll within the popup if needed. */
+  overflow: auto;
+  /* Keep scrolling gestures contained inside the popup. */
+  overscroll-behavior: contain;
+  /* Improve momentum scrolling on iOS Safari. */
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Style the popup section headings. */
+.overlay-section h3 {
+  /* Separate the heading from its paragraph. */
+  margin-bottom: 8px;
+  /* Set the small popup heading size. */
+  font-size: 14px;
+  /* Render popup section headings in uppercase. */
+  text-transform: uppercase;
+}
+
+/* Increase popup heading tracking on desktop. */
+@media (min-width: 641px) {
+  .overlay-section h3 {
+    /* Add subtle desktop-only tracking. */
+    letter-spacing: 1px;
+  }
+}
+
+/* Style the popup body text. */
+.overlay-section p {
+  /* Use softened white for body copy. */
+  color: rgba(247, 248, 255, 0.84);
+  /* Set the popup body font size. */
+  font-size: 16px;
+  /* Use the popup body line height. */
+  line-height: 1.55;
+  /* Keep the weight normal. */
+  font-weight: 400;
+  /* Ask the browser for better text shaping when possible. */
+  text-rendering: optimizeLegibility;
+  /* Improve font smoothing in WebKit. */
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Style strong text inside popup paragraphs. */
+.overlay-section strong {
+  /* Use solid white for emphasis. */
+  color: #f7f8ff;
+}
+
+/* Shared class for popup copy animations. */
+.overlay-pop {
+  /* Run the popup content entrance animation. */
+  animation: overlay-pop-in 240ms steps(2, end) both;
+}
+
+/* Define the popup content pop-in animation. */
+@keyframes overlay-pop-in {
+  /* Starting state. */
+  0% {
+    /* Start invisible. */
+    opacity: 0;
+    /* Start slightly shifted and scaled. */
+    transform: translateY(6px) scale(0.985);
+    /* Add a touch of blur at the start. */
+    filter: blur(1px);
+  }
+
+  /* Midway state. */
+  55% {
+    /* Fade most of the way in. */
+    opacity: 0.7;
+    /* Slightly overshoot upward and outward. */
+    transform: translateY(-2px) scale(1.01);
+  }
+
+  /* Final state. */
+  100% {
+    /* End fully visible. */
+    opacity: 1;
+    /* End at the natural size and position. */
+    transform: translateY(0) scale(1);
+    /* End without blur. */
+    filter: blur(0);
+  }
+}
+
+/* Adjust layout for tablet and small desktop widths. */
+@media (max-width: 900px) {
+  .poster-table {
+    /* Narrow the poster columns for medium screens. */
+    grid-template-columns: 38px minmax(220px, 1.4fr) minmax(180px, 1fr) minmax(130px, 0.8fr) minmax(90px, 0.55fr) minmax(130px, 0.8fr);
+    /* Shorten the large rows for medium screens. */
+    grid-template-rows:
+      32px
+      minmax(28px, auto)
+      minmax(52px, auto)
+      minmax(52px, auto)
+      minmax(52px, auto)
+      minmax(52px, auto)
+      minmax(28px, auto)
+      minmax(28px, auto)
+      minmax(28px, auto)
+      minmax(52px, auto)
+      minmax(28px, auto)
+      minmax(28px, auto)
+      minmax(28px, auto)
+      minmax(28px, auto)
+      minmax(52px, auto)
+      minmax(52px, auto)
+      minmax(52px, auto)
+      minmax(52px, auto)
+      minmax(52px, auto)
+      minmax(52px, auto)
+      minmax(52px, auto)
+      minmax(52px, auto);
+  }
+
+  .title-cell h1 {
+    /* Reduce the title size on medium screens. */
+    font-size: clamp(22px, 3vw, 42px);
+  }
+
+  .speaker-button {
+    /* Reduce speaker button text on medium screens. */
+    font-size: clamp(19px, 2.8vw, 32px);
+  }
+
+  .speaker-overlay {
+    /* Keep the overlay spanning the right-side columns. */
+    grid-column: 3 / 7;
+  }
+}
+
+/* Adjust layout for mobile. */
+@media (max-width: 640px) {
+  body {
+    /* Prevent sideways page panning on mobile. */
+    overflow-x: hidden;
+  }
+
+  .poster-page {
+    /* Let the poster wrapper shrink to content height on mobile. */
+    min-height: auto;
+    /* Prevent the wrapper itself from panning sideways. */
+    overflow-x: hidden;
+  }
+
+  .poster-table {
+    /* Preserve the wide poster layout and allow cropping. */
+    width: 980px;
+    /* Let the grid height follow content on mobile. */
+    min-height: auto;
+  }
+
+  .ocadu-cell {
+    /* Move OCAD U into column A on mobile. */
+    grid-column: 2;
+    /* Place OCAD U into the row used for the mobile summary layout. */
+    grid-row: 4;
+    /* Right-align OCAD U inside that cell. */
+    justify-content: flex-end;
+  }
+
+  .speaker-overlay {
+    /* Use a fixed viewport popup on mobile. */
+    position: fixed;
+    /* Inset the popup from the top edge. */
+    top: 16px;
+    /* Inset the popup from the left edge. */
+    left: 16px;
+    /* Inset the popup from the right edge. */
+    right: 16px;
+    /* Inset the popup from the bottom edge. */
+    bottom: 16px;
+    /* Stop using grid column placement on mobile. */
+    grid-column: auto;
+    /* Stop using grid row placement on mobile. */
+    grid-row: auto;
+    /* Let width be derived from the fixed insets. */
+    width: auto;
+    /* Remove any max-width restriction. */
+    max-width: none;
+    /* Remove any max-height restriction. */
+    max-height: none;
+    /* Make the mobile popup less translucent for readability. */
+    background: rgba(20, 31, 115, 0.92);
+  }
+
+  .speaker-button {
+    /* Prevent speaker names from wrapping. */
+    flex-wrap: nowrap;
+    /* Force a single-line speaker button. */
+    white-space: nowrap;
+    /* Use a fixed mobile speaker size. */
+    font-size: 23px;
+  }
+
+  .speaker-last-name {
+    /* Use a fixed smaller surname size on mobile. */
+    font-size: 12px;
+  }
+
+  .overlay-columns {
+    /* Collapse popup columns into a single column on mobile. */
+    grid-template-columns: 1fr;
+  }
+}
