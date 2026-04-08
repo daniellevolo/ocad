@@ -7,20 +7,22 @@
   <title>Research Talks</title>
   <meta name="description" content="Research Talks poster for Vanessa Dion Fletcher, Kelsey Pugh, and Anna Stielau.">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- reduce font loading delay -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link
     href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;700&family=Space+Mono:wght@400;700&display=swap"
     rel="stylesheet">
   <link rel="stylesheet" href="css/main.css">
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 
 <body>
-  <!-- Main poster container. -->
+  <!-- main poster container -->
   <main class="poster-page">
-      <!-- Spreadsheet-like poster grid. -->
+      <!-- spreadsheet-like poster grid -->
       <div class="poster-table">
-        <!-- Top-left corner plus column letters. -->
+        <!-- top-left corner plus column letters -->
         <div class="grid-cell corner"></div>
         <div class="grid-cell col-letters">A</div>
         <div class="grid-cell col-letters">B</div>
@@ -28,7 +30,7 @@
         <div class="grid-cell col-letters">D</div>
         <div class="grid-cell col-letters">E</div>
 
-        <!-- Row 1: faculty label. -->
+        <!-- row 1: faculty label -->
         <div class="grid-cell row-numbers compact-row">1</div>
         <div class="grid-cell faculty-cell compact-row"><span class="type-in">Faculty of Arts and Science</span></div>
         <div class="grid-cell empty-cell compact-row"></div>
@@ -36,7 +38,7 @@
         <div class="grid-cell empty-cell compact-row"></div>
         <div class="grid-cell empty-cell compact-row"></div>
 
-        <!-- Row 2: poster title. -->
+        <!-- row 2: poster title -->
         <div class="grid-cell row-numbers">2</div>
         <div class="grid-cell title-cell">
           <h1 id="research-talks-title" class="type-in">Research Talks:</h1>
@@ -46,7 +48,7 @@
         <div class="grid-cell empty-cell"></div>
         <div class="grid-cell empty-cell"></div>
 
-        <!-- Row 3: OCAD U branding. -->
+        <!-- row 3: OCAD U branding -->
         <div class="grid-cell row-numbers">3</div>
         <div class="grid-cell empty-cell"></div>
         <div class="grid-cell empty-cell"></div>
@@ -54,7 +56,7 @@
         <div class="grid-cell empty-cell"></div>
         <div class="grid-cell ocadu-cell">OCAD U</div>
 
-        <!-- Row 4: event summary. -->
+        <!-- row 4: event summary -->
         <div class="grid-cell row-numbers">4</div>
         <div class="grid-cell summary-cell">
           <span>Faculty of Arts and Science faculty members Vanessa Dion Fletcher, Kelsey Pugh, and Anna Stielau discuss
@@ -65,7 +67,7 @@
         <div class="grid-cell empty-cell"></div>
         <div class="grid-cell empty-cell"></div>
 
-        <!-- Row 5: spacer row. -->
+        <!-- row 5: spacer row -->
         <div class="grid-cell row-numbers">5</div>
         <div class="grid-cell empty-cell"></div>
         <div class="grid-cell empty-cell"></div>
@@ -73,7 +75,7 @@
         <div class="grid-cell empty-cell"></div>
         <div class="grid-cell empty-cell"></div>
 
-        <!-- Row 6: event date. -->
+        <!-- row 6: event date -->
         <div class="grid-cell row-numbers compact-row">6</div>
         <div class="grid-cell event-details compact-row"><span class="event-detail"><span class="event-label">Date:</span><span class="event-value">March 24th, 2026</span></span></div>
         <div class="grid-cell empty-cell compact-row"></div>
@@ -81,7 +83,7 @@
         <div class="grid-cell empty-cell compact-row"></div>
         <div class="grid-cell empty-cell compact-row"></div>
 
-        <!-- Row 7: event time. -->
+        <!-- row 7: event time -->
         <div class="grid-cell row-numbers compact-row">7</div>
         <div class="grid-cell event-details compact-row"><span class="event-detail"><span class="event-label">Time:</span><span class="event-value">3:30 - 4:30pm</span></span></div>
         <div class="grid-cell empty-cell compact-row"></div>
@@ -89,7 +91,7 @@
         <div class="grid-cell empty-cell compact-row"></div>
         <div class="grid-cell empty-cell compact-row"></div>
 
-        <!-- Row 8: event location. -->
+        <!-- row 8: event location -->
         <div class="grid-cell row-numbers compact-row">8</div>
         <div class="grid-cell event-details compact-row"><span class="event-detail"><span class="event-label">Location:</span><span class="event-value">100 McCaul St, Toronto</span></span></div>
         <div class="grid-cell empty-cell compact-row"></div>
@@ -97,7 +99,7 @@
         <div class="grid-cell empty-cell compact-row"></div>
         <div class="grid-cell empty-cell compact-row"></div>
 
-        <!-- Row 9: spacer row before speakers. -->
+        <!-- row 9: spacer row before speakers -->
         <div class="grid-cell row-numbers">9</div>
         <div class="grid-cell empty-cell"></div>
         <div class="grid-cell empty-cell"></div>
@@ -105,7 +107,7 @@
         <div class="grid-cell empty-cell"></div>
         <div class="grid-cell empty-cell"></div>
 
-        <!-- Row 10: Vanessa trigger button. -->
+        <!-- row 10: Vanessa trigger button -->
         <div class="grid-cell row-numbers">10</div>
         <button class="grid-cell speaker-button vanessa-trigger" type="button"><span class="speaker-first-name">Vanessa</span> <span
             class="speaker-last-name">Dion Fletcher</span></button>
@@ -114,7 +116,7 @@
         <div class="grid-cell empty-cell"></div>
         <div class="grid-cell empty-cell"></div>
 
-        <!-- Row 11: spacer row between speaker buttons. -->
+        <!-- row 11: spacer row between speaker buttons -->
         <div class="grid-cell row-numbers compact-row">11</div>
         <div class="grid-cell empty-cell"></div>
         <div class="grid-cell empty-cell"></div>
@@ -122,7 +124,7 @@
         <div class="grid-cell empty-cell"></div>
         <div class="grid-cell empty-cell"></div>
 
-        <!-- Row 12: Kelsey trigger button. -->
+        <!-- row 12: Kelsey trigger button -->
         <div class="grid-cell row-numbers">12</div>
         <button class="grid-cell speaker-button kelsey-trigger" type="button"><span class="speaker-first-name">Kelsey</span> <span class="speaker-last-name">Pugh</span>
         </button>
@@ -131,7 +133,7 @@
         <div class="grid-cell empty-cell"></div>
         <div class="grid-cell empty-cell"></div>
 
-        <!-- Row 13: spacer row between speaker buttons. -->
+        <!-- row 13: spacer row between speaker buttons -->
         <div class="grid-cell row-numbers compact-row">13</div>
         <div class="grid-cell empty-cell"></div>
         <div class="grid-cell empty-cell"></div>
@@ -139,7 +141,7 @@
         <div class="grid-cell empty-cell"></div>
         <div class="grid-cell empty-cell"></div>
 
-        <!-- Row 14: Anna trigger button. -->
+        <!-- row 14: Anna trigger button -->
         <div class="grid-cell row-numbers">14</div>
         <button class="grid-cell speaker-button anna-trigger" type="button"><span class="speaker-first-name">Anna</span> <span class="speaker-last-name">Stielau</span>
         </button>
@@ -148,7 +150,7 @@
         <div class="grid-cell empty-cell"></div>
         <div class="grid-cell empty-cell"></div>
 
-        <!-- Rows 15-21: empty poster grid space below the speaker buttons. -->
+        <!-- rows 15-21: empty poster grid space below the speaker buttons -->
         <div class="grid-cell row-numbers">15</div>
         <div class="grid-cell empty-cell"></div>
         <div class="grid-cell empty-cell"></div>
@@ -198,15 +200,15 @@
         <div class="grid-cell empty-cell"></div>
         <div class="grid-cell empty-cell"></div>
 
-        <!-- Vanessa popup panel. -->
+        <!-- Vanessa popup panel -->
         <section class="speaker-overlay hidden" id="vanessa-overlay">
-          <!-- Vanessa popup header. -->
+          <!-- Vanessa popup header -->
           <div class="overlay-header">
             <p class="overlay-index">01</p>
             <h2>Vanessa Dion Fletcher</h2>
             <button class="overlay-close" type="button">x</button>
           </div>
-          <!-- Vanessa popup content columns. -->
+          <!-- Vanessa popup content columns -->
           <div class="overlay-columns">
             <div class="overlay-section">
               <h3>Bio</h3>
@@ -235,15 +237,15 @@
           </div>
         </section>
 
-        <!-- Kelsey popup panel. -->
+        <!-- Kelsey popup panel -->
         <section class="speaker-overlay hidden" id="kelsey-overlay">
-          <!-- Kelsey popup header. -->
+          <!-- Kelsey popup header -->
           <div class="overlay-header">
             <p class="overlay-index">02</p>
             <h2>Kelsey Pugh</h2>
             <button class="overlay-close" type="button">x</button>
           </div>
-          <!-- Kelsey popup content columns. -->
+          <!-- Kelsey popup content columns -->
           <div class="overlay-columns">
             <div class="overlay-section">
               <h3>Bio</h3>
@@ -267,15 +269,15 @@
           </div>
         </section>
 
-        <!-- Anna popup panel. -->
+        <!-- Anna popup panel -->
         <section class="speaker-overlay hidden" id="anna-overlay">
-          <!-- Anna popup header. -->
+          <!-- Anna popup header -->
           <div class="overlay-header">
             <p class="overlay-index">03</p>
             <h2>Anna Stielau</h2>
             <button class="overlay-close" type="button">x</button>
           </div>
-          <!-- Anna popup content columns. -->
+          <!-- Anna popup content columns -->
           <div class="overlay-columns">
             <div class="overlay-section">
               <h3>Bio</h3>
@@ -300,8 +302,6 @@
       </div>
 
   </main>
-
-  <!-- Poster interaction logic. -->
   <script src="js/script.js"></script>
 </body>
 
