@@ -6,3 +6,6 @@ https://daniellevolo.github.io/ocad/GRPH-2010/after-archive-user-testing/
 
 Experimental Form II: Interaction
 https://daniellevolo.github.io/ocad/GRPH-2010/poster/index.html
+
+Resource Web V: Final Live Site
+https://daniellevolo.github.io/ocad/GRPH-2010/after-archive-final/index.html
