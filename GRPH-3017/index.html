@@ -30,50 +30,40 @@
       <div id="dashboard-grid" class="dashboard-grid" role="tabpanel" hidden>
         <section class="card rating-panel" aria-labelledby="rating-title">
           <div class="card-heading">
-            <div>
-              <p class="eyebrow">Perceived patient safety</p>
+            <div class="title-row">
               <h2 id="rating-title">Overall Safety Rating</h2>
-            </div>
-            <button class="info-button" type="button" aria-label="About overall safety rating" title="Respondents rated the overall safety of their unit. The average is calculated from the rating counts.">i</button>
-          </div>
-          <div class="rating-summary">
-            <div id="rating-donut" class="rating-donut" role="img"></div>
-            <div class="rating-average">
-              <strong id="rating-average-value">—</strong>
-              <span>average rating<br>out of 5</span>
+              <button class="info-button" type="button" aria-label="About overall safety rating" aria-describedby="rating-note">i</button>
             </div>
           </div>
-          <p id="rating-count" class="muted small"></p>
-          <p class="rating-data-note">Mean and shares are recalculated from response counts because the CSV summary row is outside the 1–5 scale.</p>
-          <ul id="rating-legend" class="rating-legend"></ul>
-          <div class="rating-scale"><span>Lower ratings</span><span>Higher ratings</span></div>
+          <p id="rating-note" class="info-note">Respondents rated the overall safety of their unit. Mean and shares are recalculated from response counts because the CSV summary row is outside the 1–5 scale.</p>
+          <div id="rating-list" class="rating-list"></div>
         </section>
 
         <section class="card scores-panel" aria-labelledby="scores-title">
           <div class="card-heading">
-            <div>
-              <h2 id="scores-title">Average scores by theme</h2>
+            <div class="title-row">
+              <h2 id="scores-title">Average Scores For <span id="scores-program">—</span></h2>
+              <button class="info-button" type="button" aria-label="About average scores" aria-describedby="scores-note">i</button>
             </div>
-            <span class="scale-label">Scale: 1–5</span>
           </div>
+          <p id="scores-note" class="info-note">Higher average scores indicate more positive perceptions; low scores are prompts for inquiry, not proof of cause.</p>
           <div class="scores-layout">
             <div class="score-main">
               <div id="score-chart" class="score-chart" aria-label="Average safety culture scores"></div>
             </div>
             <aside class="score-highlights" aria-label="Score highlights">
               <div class="highlight highlight-positive">
-                <span class="highlight-label">Strongest indicator</span>
+                <span class="highlight-label">Strongest Indicator</span>
                 <strong id="strongest-name">—</strong>
                 <span id="strongest-value" class="highlight-value">—</span>
               </div>
               <div class="highlight highlight-opportunity">
-                <span class="highlight-label">Area to explore</span>
+                <span class="highlight-label">Areas to Improve</span>
                 <strong id="lowest-name">—</strong>
                 <span id="lowest-value" class="highlight-value">—</span>
               </div>
             </aside>
           </div>
-          <p class="card-footnote">Higher average scores indicate more positive perceptions; low scores are prompts for inquiry, not proof of cause.</p>
         </section>
 
         <section class="card distribution-panel" aria-labelledby="distribution-title">
@@ -94,9 +84,11 @@
           <div class="card-heading">
             <div>
               <p class="eyebrow">Unit context</p>
-              <h2 id="activity-title">Reported events &amp; participation</h2>
+              <div class="title-row">
+                <h2 id="activity-title">Reported events &amp; participation</h2>
+                <button class="info-button" type="button" aria-label="About reported events" title="Reported event counts are self-reported and should not be read as event incidence or as a direct measure of safety culture.">i</button>
+              </div>
             </div>
-            <button class="info-button" type="button" aria-label="About reported events" title="Reported event counts are self-reported and should not be read as event incidence or as a direct measure of safety culture.">i</button>
           </div>
           <div class="activity-stats">
             <div>

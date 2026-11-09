@@ -38,14 +38,12 @@ const elements = {
   errorMessage: document.querySelector("#load-error-message"),
   grid: document.querySelector("#dashboard-grid"),
   scoreChart: document.querySelector("#score-chart"),
+  scoresProgram: document.querySelector("#scores-program"),
   strongestName: document.querySelector("#strongest-name"),
   strongestValue: document.querySelector("#strongest-value"),
   lowestName: document.querySelector("#lowest-name"),
   lowestValue: document.querySelector("#lowest-value"),
-  ratingDonut: document.querySelector("#rating-donut"),
-  ratingAverage: document.querySelector("#rating-average-value"),
-  ratingCount: document.querySelector("#rating-count"),
-  ratingLegend: document.querySelector("#rating-legend"),
+  ratingList: document.querySelector("#rating-list"),
   distributionChart: document.querySelector("#distribution-chart"),
   responseLegend: document.querySelector("#response-legend"),
   activityUnit: document.querySelector("#activity-unit"),
@@ -237,36 +235,80 @@ function updateProgramTabs() {
   }
 }
 
-function renderRating(program) {
+function summarizeRating(program) {
   const ratings = getProgramRatings(program);
   const total = sum(ratings.map((rating) => rating.count));
   const weighted = sum(ratings.map((rating) => rating.count * rating.value));
-  const average = total ? weighted / total : 0;
-  let offset = 0;
-  const segments = ratings.map((rating) => {
-    const start = offset;
-    offset += total ? (rating.count / total) * 100 : 0;
-    return `${rating.color} ${start.toFixed(2)}% ${offset.toFixed(2)}%`;
-  });
+  return { ratings, total, average: total ? weighted / total : 0 };
+}
 
-  elements.ratingDonut.style.background = `conic-gradient(${segments.join(", ")})`;
-  elements.ratingDonut.setAttribute("aria-label", `${formatNumber(average)} out of 5 average safety rating from ${total} responses.`);
-  setText(elements.ratingAverage, formatNumber(average));
-  setText(elements.ratingCount, `${total} responses`);
-  elements.ratingLegend.replaceChildren();
+function renderRating() {
+  elements.ratingList.replaceChildren();
 
-  for (const rating of ratings) {
-    const item = document.createElement("li");
-    const swatch = document.createElement("span");
-    swatch.className = "legend-swatch";
-    swatch.style.backgroundColor = rating.color;
-    swatch.setAttribute("aria-hidden", "true");
-    const label = document.createElement("span");
-    label.textContent = rating.label;
-    const count = document.createElement("strong");
-    count.textContent = `${rating.count} · ${total ? Math.round((rating.count / total) * 100) : 0}%`;
-    item.append(swatch, label, count);
-    elements.ratingLegend.append(item);
+  for (const program of data.programs) {
+    const { ratings, total, average } = summarizeRating(program);
+    const selected = program === selectedProgram;
+    const item = document.createElement(selected ? "div" : "button");
+    item.className = `rating-item ${selected ? "is-selected" : "is-collapsed"}`;
+    item.dataset.program = program;
+    if (!selected) {
+      item.type = "button";
+      item.setAttribute("aria-label", `Show ${program}, ${formatNumber(average)} average safety rating`);
+    }
+
+    const name = document.createElement("span");
+    name.className = "rating-program";
+    name.textContent = program;
+
+    const ring = document.createElement("div");
+    ring.className = selected ? "rating-donut" : "rating-mini";
+    const value = document.createElement("strong");
+
+    if (selected) {
+      let offset = 0;
+      const segments = ratings.map((rating) => {
+        const start = offset;
+        offset += total ? (rating.count / total) * 100 : 0;
+        return `${rating.color} ${start.toFixed(2)}% ${offset.toFixed(2)}%`;
+      });
+      ring.style.background = `conic-gradient(${segments.join(", ")})`;
+      ring.setAttribute("role", "img");
+      ring.setAttribute("aria-label", `${formatNumber(average)} out of 5 average safety rating from ${total} responses.`);
+      const caption = document.createElement("span");
+      caption.textContent = "Avg. Safety Rating";
+      const center = document.createElement("div");
+      center.className = "rating-average";
+      value.textContent = formatNumber(average);
+      center.append(value, caption);
+      ring.append(center);
+
+      const legend = document.createElement("ul");
+      legend.className = "rating-legend";
+      for (const rating of ratings) {
+        const row = document.createElement("li");
+        const swatch = document.createElement("span");
+        swatch.className = "legend-swatch";
+        swatch.style.backgroundColor = rating.color;
+        swatch.setAttribute("aria-hidden", "true");
+        const label = document.createElement("span");
+        label.textContent = rating.label;
+        const count = document.createElement("strong");
+        count.textContent = String(rating.count);
+        count.title = `${total ? Math.round((rating.count / total) * 100) : 0}% of ${total} responses`;
+        row.append(swatch, label, count);
+        legend.append(row);
+      }
+      const details = document.createElement("div");
+      details.className = "rating-details";
+      details.append(name, legend);
+      item.append(details, ring);
+    } else {
+      ring.style.setProperty("--fill", `${(average / 5) * 100}%`);
+      value.textContent = formatNumber(average);
+      ring.append(value);
+      item.append(name, ring);
+    }
+    elements.ratingList.append(item);
   }
 }
 
@@ -391,11 +433,18 @@ function renderActivity(program, unit) {
   }
 }
 
+function selectProgram(program) {
+  selectedProgram = program;
+  updateProgramTabs();
+  renderDashboard();
+}
+
 function renderDashboard() {
   const program = selectedProgram;
   const unit = OVERALL_SCOPE;
-  renderRating(program);
+  renderRating();
   renderScores(program, unit);
+  setText(elements.scoresProgram, program);
   renderDistribution(program);
   renderActivity(program, unit);
 }
@@ -408,14 +457,16 @@ async function init() {
     data = readData(Object.fromEntries(keys.map((key, index) => [key, results[index]])));
     fillProgramFilter();
     renderDashboard();
-    function changeProgram() {
-      renderDashboard();
-    }
     elements.programTabs.addEventListener("click", (event) => {
       if (event.target instanceof HTMLButtonElement && event.target.dataset.program) {
-        selectedProgram = event.target.dataset.program;
-        updateProgramTabs();
-        changeProgram();
+        selectProgram(event.target.dataset.program);
+      }
+    });
+    elements.ratingList.addEventListener("click", (event) => {
+      const row = event.target instanceof Element ? event.target.closest("[data-program]") : null;
+      if (row) {
+        selectProgram(row.dataset.program);
+        elements.programTabs.querySelector('[aria-selected="true"]')?.focus();
       }
     });
     elements.programTabs.addEventListener("keydown", (event) => {
@@ -428,10 +479,8 @@ async function init() {
       else if (event.key === "End") nextIndex = tabs.length - 1;
       if (nextIndex !== undefined) {
         event.preventDefault();
-        selectedProgram = tabs[nextIndex].dataset.program;
-        updateProgramTabs();
+        selectProgram(tabs[nextIndex].dataset.program);
         tabs[nextIndex].focus();
-        changeProgram();
       }
     });
     elements.status.hidden = true;
