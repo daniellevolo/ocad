@@ -247,13 +247,9 @@ function renderRating() {
   for (const program of data.programs) {
     const { ratings, total, average } = summarizeRating(program);
     const selected = program === selectedProgram;
-    const item = document.createElement(selected ? "div" : "button");
+    const item = document.createElement("div");
     item.className = `rating-item ${selected ? "is-selected" : "is-collapsed"}`;
     item.dataset.program = program;
-    if (!selected) {
-      item.type = "button";
-      item.setAttribute("aria-label", `Show ${program}, ${formatNumber(average)} average safety rating`);
-    }
 
     const name = document.createElement("span");
     name.className = "rating-program";
@@ -457,13 +453,6 @@ async function init() {
     elements.programTabs.addEventListener("click", (event) => {
       if (event.target instanceof HTMLButtonElement && event.target.dataset.program) {
         selectProgram(event.target.dataset.program);
-      }
-    });
-    elements.ratingList.addEventListener("click", (event) => {
-      const row = event.target instanceof Element ? event.target.closest("[data-program]") : null;
-      if (row) {
-        selectProgram(row.dataset.program);
-        elements.programTabs.querySelector('[aria-selected="true"]')?.focus();
       }
     });
     elements.programTabs.addEventListener("keydown", (event) => {
