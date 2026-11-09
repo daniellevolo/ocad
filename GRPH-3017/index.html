@@ -68,45 +68,37 @@
 
         <section class="card distribution-panel" aria-labelledby="distribution-title">
           <div class="card-heading">
-            <div>
-              <p class="eyebrow">Response mix</p>
-              <h2 id="distribution-title">Survey results by theme</h2>
+            <div class="title-row">
+              <h2 id="distribution-title">Survey Results</h2>
+              <button class="info-button" type="button" aria-label="About survey results" aria-describedby="distribution-note">i</button>
             </div>
-            <span class="scale-label">Share of responses</span>
           </div>
+          <p id="distribution-note" class="info-note">Each bar shows the share of responses at every level of agreement for a safety culture theme, from strongly disagree to strongly agree.</p>
           <div class="distribution-layout">
-            <div id="distribution-chart" class="distribution-chart" aria-label="Response distribution by safety culture theme"></div>
-            <ul id="response-legend" class="response-legend" aria-label="Response scale legend"></ul>
+            <aside class="distribution-side">
+              <p id="distribution-program" class="distribution-program"></p>
+              <ul id="response-legend" class="response-legend" aria-label="Response scale legend"></ul>
+            </aside>
+            <div class="distribution-main">
+              <div id="distribution-chart" class="distribution-chart" aria-label="Response distribution by safety culture theme"></div>
+              <div class="distribution-axis" aria-hidden="true"><span>0%</span><span>100%</span></div>
+            </div>
           </div>
         </section>
 
         <section class="card activity-panel" aria-labelledby="activity-title">
           <div class="card-heading">
-            <div>
-              <p class="eyebrow">Unit context</p>
-              <div class="title-row">
-                <h2 id="activity-title">Reported events &amp; participation</h2>
-                <button class="info-button" type="button" aria-label="About reported events" title="Reported event counts are self-reported and should not be read as event incidence or as a direct measure of safety culture.">i</button>
-              </div>
+            <div class="title-row">
+              <h2 id="activity-title">Reported Events<br />Past Year</h2>
+              <button class="info-button" type="button" aria-label="About reported events" aria-describedby="activity-note">i</button>
             </div>
           </div>
-          <div class="activity-stats">
-            <div>
-              <span id="activity-unit" class="stat-caption">Selected scope</span>
-              <strong id="events-value" class="stat-value">—</strong>
-              <span class="stat-caption">events reported</span>
-            </div>
-            <div class="participation-stat">
-              <span class="stat-caption">Survey response rate</span>
-              <strong id="participation-value" class="stat-value">—</strong>
-              <span id="participation-count" class="stat-caption">—</span>
-            </div>
+          <p id="activity-note" class="info-note">Reported event counts are self-reported and should not be read as event incidence or as a direct measure of safety culture.</p>
+          <div id="unit-list" class="event-tiles"></div>
+          <div class="event-total">
+            <span id="activity-program" class="event-total-label"></span>
+            <strong id="events-value" class="event-total-value">—</strong>
           </div>
-          <div class="unit-list-heading">
-            <span>Units in this program</span>
-            <span>Events · response rate</span>
-          </div>
-          <div id="unit-list" class="unit-list"></div>
         </section>
       </div>
     </main>

@@ -45,11 +45,10 @@ const elements = {
   lowestValue: document.querySelector("#lowest-value"),
   ratingList: document.querySelector("#rating-list"),
   distributionChart: document.querySelector("#distribution-chart"),
+  distributionProgram: document.querySelector("#distribution-program"),
   responseLegend: document.querySelector("#response-legend"),
-  activityUnit: document.querySelector("#activity-unit"),
+  activityProgram: document.querySelector("#activity-program"),
   eventsValue: document.querySelector("#events-value"),
-  participationValue: document.querySelector("#participation-value"),
-  participationCount: document.querySelector("#participation-count"),
   unitList: document.querySelector("#unit-list"),
 };
 
@@ -361,6 +360,7 @@ function renderScores(program, unit) {
 
 function renderDistribution(program) {
   const countsByScore = getProgramResponseCounts(program);
+  setText(elements.distributionProgram, program);
   elements.distributionChart.replaceChildren();
   for (const field of SCORE_FIELDS) {
     const scoreCounts = RESPONSE_LEVELS.map((level) => ({
@@ -377,7 +377,7 @@ function renderDistribution(program) {
     bar.className = "distribution-bar";
     bar.setAttribute("role", "img");
     bar.setAttribute("aria-label", `${displayName(field)}: ${scoreCounts.map((entry) => `${entry.label} ${entry.count}`).join(", ")}.`);
-    for (const entry of scoreCounts) {
+    for (const entry of [...scoreCounts].reverse()) {
       const segment = document.createElement("span");
       segment.className = "distribution-segment";
       segment.style.width = `${total ? (entry.count / total) * 100 : 0}%`;
@@ -404,33 +404,30 @@ function renderDistribution(program) {
 }
 
 function renderActivity(program, unit) {
-  const participation = getUnitParticipation(program, unit);
-  setText(elements.activityUnit, unit === OVERALL_SCOPE ? "Program total" : unit);
+  setText(elements.activityProgram, program);
   setText(elements.eventsValue, String(getEventCount(program, unit)));
-  if (participation) {
-    const invited = asNumber(participation.Invited_Count) ?? 0;
-    const responses = asNumber(participation.Responses_Count) ?? 0;
-    setText(elements.participationValue, `${invited ? Math.round((responses / invited) * 100) : 0}%`);
-    setText(elements.participationCount, `${responses} responses of ${invited} invited`);
-  } else {
-    setText(elements.participationValue, "—");
-    setText(elements.participationCount, "No participation data");
-  }
 
-  const unitRows = data.participationRows.filter((record) => record.Clinical_Program === program);
+  const tiles = data.eventRows
+    .filter((record) => record.Clinical_Program === program && !/-\s*OVERALL$/i.test(record.Unit))
+    .map((record) => ({
+      name: record.Unit.replace(/^.*?\s-\s/, ""),
+      count: asNumber(record["Sum of Reported Events"]) ?? 0,
+    }))
+    .sort((a, b) => b.count - a.count);
   elements.unitList.replaceChildren();
-  for (const record of unitRows) {
-    const row = document.createElement("div");
-    row.className = "unit-row";
+  elements.unitList.style.setProperty("--tile-rows", Math.max(tiles.length - 1, 1));
+  tiles.forEach((tile, index) => {
+    const item = document.createElement("div");
+    item.className = index === 0 ? "event-tile is-primary" : "event-tile";
     const name = document.createElement("span");
-    name.className = "unit-name";
-    name.textContent = record.Unit;
-    const metrics = document.createElement("span");
-    metrics.className = "unit-metrics";
-    metrics.textContent = `${getEventCount(program, record.Unit)} events · ${record.Response_Rate}`;
-    row.append(name, metrics);
-    elements.unitList.append(row);
-  }
+    name.className = "event-tile-name";
+    name.textContent = tile.name;
+    const count = document.createElement("strong");
+    count.className = "event-tile-count";
+    count.textContent = String(tile.count);
+    item.append(name, count);
+    elements.unitList.append(item);
+  });
 }
 
 function selectProgram(program) {
