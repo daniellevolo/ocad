@@ -194,8 +194,8 @@ summary:focus-visible {
 
 .info-button {
   flex: 0 0 auto;
-  width: 22px;
-  height: 22px;
+  width: 18px;
+  height: 18px;
   padding: 0;
   border: 0;
   border-radius: 50%;
@@ -203,9 +203,9 @@ summary:focus-visible {
   color: var(--paper);
   cursor: help;
   font-family: Georgia, serif;
-  font-size: 14px;
+  font-size: 12px;
   font-weight: 700;
-  line-height: 22px;
+  line-height: 18px;
   text-align: center;
 }
 
