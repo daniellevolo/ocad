@@ -1,0 +1,163 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#17264d">
+    <title>Staff Safety Culture Dashboard</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="dashboard.js" defer></script>
+  </head>
+  <body>
+    <a class="skip-link" href="#main-content">Skip to dashboard</a>
+    <header class="topbar">
+      <a class="brand" href="#" aria-label="Staff Safety Culture dashboard home">
+        <strong>Staff Safety Culture</strong>
+      </a>
+      <img class="topbar-logo" src="resources/uhn-logo.png" alt="UHN Canada's Hospital" width="284" height="55">
+    </header>
+
+    <main id="main-content" class="page-shell">
+      <section class="page-heading" aria-labelledby="page-title">
+        <div>
+          <p class="eyebrow">Patient safety · Staff perceptions</p>
+          <h1 id="page-title">Culture at a glance</h1>
+          <p class="page-intro">Explore survey strengths and areas leaders may want to investigate.</p>
+        </div>
+        <div class="filters" aria-label="Dashboard filters">
+          <label>
+            <span>Clinical program</span>
+            <select id="program-filter" disabled>
+              <option>Loading programs…</option>
+            </select>
+          </label>
+          <label>
+            <span>Unit</span>
+            <select id="unit-filter" disabled>
+              <option>Loading units…</option>
+            </select>
+          </label>
+        </div>
+      </section>
+
+      <p id="load-status" class="load-status" role="status" aria-live="polite">Loading dashboard data…</p>
+      <section id="load-error" class="load-error" role="alert" hidden>
+        <h2>Dashboard data could not be loaded</h2>
+        <p id="load-error-message"></p>
+        <p>Serve this folder over HTTP (for example, run <code>python3 -m http.server 8000</code> here) and open <code>http://localhost:8000</code>.</p>
+      </section>
+
+      <div id="dashboard-grid" class="dashboard-grid" hidden>
+        <section class="card rating-panel" aria-labelledby="rating-title">
+          <div class="card-heading">
+            <div>
+              <p class="eyebrow">Perceived patient safety</p>
+              <h2 id="rating-title">Overall Safety Rating</h2>
+            </div>
+            <button class="info-button" type="button" aria-label="About overall safety rating" title="Respondents rated the overall safety of their unit. The average is calculated from the rating counts.">i</button>
+          </div>
+          <div class="rating-summary">
+            <div id="rating-donut" class="rating-donut" role="img"></div>
+            <div class="rating-average">
+              <strong id="rating-average-value">—</strong>
+              <span>average rating<br>out of 5</span>
+            </div>
+          </div>
+          <p id="rating-count" class="muted small"></p>
+          <p class="rating-data-note">Mean and shares are recalculated from response counts because the CSV summary row is outside the 1–5 scale.</p>
+          <ul id="rating-legend" class="rating-legend"></ul>
+          <div class="rating-scale"><span>Lower ratings</span><span>Higher ratings</span></div>
+        </section>
+
+        <section class="card scores-panel" aria-labelledby="scores-title">
+          <div class="card-heading">
+            <div>
+              <h2 id="scores-title">Average scores by theme</h2>
+            </div>
+            <span class="scale-label">Scale: 1–5</span>
+          </div>
+          <div class="scores-layout">
+            <div class="score-main">
+              <div id="score-chart" class="score-chart" aria-label="Average safety culture scores"></div>
+              <fieldset class="score-programs" id="score-programs">
+                <legend>Clinical program</legend>
+              </fieldset>
+            </div>
+            <aside class="score-highlights" aria-label="Score highlights">
+              <div class="highlight highlight-positive">
+                <span class="highlight-label">Strongest indicator</span>
+                <strong id="strongest-name">—</strong>
+                <span id="strongest-value" class="highlight-value">—</span>
+              </div>
+              <div class="highlight highlight-opportunity">
+                <span class="highlight-label">Area to explore</span>
+                <strong id="lowest-name">—</strong>
+                <span id="lowest-value" class="highlight-value">—</span>
+              </div>
+            </aside>
+          </div>
+          <p class="card-footnote">Higher average scores indicate more positive perceptions; low scores are prompts for inquiry, not proof of cause.</p>
+        </section>
+
+        <section class="card distribution-panel" aria-labelledby="distribution-title">
+          <div class="card-heading">
+            <div>
+              <p class="eyebrow">Response mix</p>
+              <h2 id="distribution-title">Survey results by theme</h2>
+            </div>
+            <span class="scale-label">Share of responses</span>
+          </div>
+          <div class="distribution-layout">
+            <div id="distribution-chart" class="distribution-chart" aria-label="Response distribution by safety culture theme"></div>
+            <ul id="response-legend" class="response-legend" aria-label="Response scale legend"></ul>
+          </div>
+        </section>
+
+        <section class="card activity-panel" aria-labelledby="activity-title">
+          <div class="card-heading">
+            <div>
+              <p class="eyebrow">Unit context</p>
+              <h2 id="activity-title">Reported events &amp; participation</h2>
+            </div>
+            <button class="info-button" type="button" aria-label="About reported events" title="Reported event counts are self-reported and should not be read as event incidence or as a direct measure of safety culture.">i</button>
+          </div>
+          <div class="activity-stats">
+            <div>
+              <span id="activity-unit" class="stat-caption">Selected scope</span>
+              <strong id="events-value" class="stat-value">—</strong>
+              <span class="stat-caption">events reported</span>
+            </div>
+            <div class="participation-stat">
+              <span class="stat-caption">Survey response rate</span>
+              <strong id="participation-value" class="stat-value">—</strong>
+              <span id="participation-count" class="stat-caption">—</span>
+            </div>
+          </div>
+          <div class="unit-list-heading">
+            <span>Units in this program</span>
+            <span>Events · response rate</span>
+          </div>
+          <div id="unit-list" class="unit-list"></div>
+        </section>
+      </div>
+
+      <section id="guide-notes" class="card guide-panel" aria-labelledby="guide-title" hidden>
+        <div>
+          <p class="eyebrow">Read with care</p>
+          <h2 id="guide-title">About this dataset</h2>
+          <p id="data-limitations"></p>
+          <p id="data-interpretation"></p>
+        </div>
+        <details class="metric-definitions">
+          <summary>Metric definitions</summary>
+          <dl id="metric-definitions-list"></dl>
+        </details>
+      </section>
+
+      <footer class="page-footer">
+        <span>Source: provided synthetic safety-culture CSVs</span>
+        <span id="updated-scope"></span>
+      </footer>
+    </main>
+  </body>
+</html>

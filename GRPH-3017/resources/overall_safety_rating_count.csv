@@ -1,0 +1,8 @@
+Safety Rating,Surgery,Distribution (%),Medicine,Distribution (%),Emergency,Distribution (%),Rehabilitation,Distribution (%),Cancer Care,Distribution (%)
+Excellent / 5,3,5%,5,8%,4,7%,11,18%,9,15%
+Very Good / 4,12,20%,16,27%,17,28%,10,17%,17,28%
+Good / 3,29,48%,25,42%,32,53%,29,48%,25,42%
+Fair / 2,12,20%,10,17%,5,8%,7,12%,7,12%
+Poor / 1,4,7%,4,7%,2,4%,3,5%,2,3%
+,,,,,,101%,,,,
+Safety Rating,5.9,, 6.3 ,,6.5,,6.6,,6.8,

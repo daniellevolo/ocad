@@ -1,0 +1,23 @@
+Clinical_Program,Unit,Teamwork_Score,Staffing_Score,Communication_Openness_Score,Leadership_Support_Score,Communication_About_Errors_Score,Reporting_Culture_Score
+Surgery,Surgery - OVERALL,3.2,2.6,3.2,2.9,3.1,3.2
+Surgery,Surgery - OR,2.95,2.55,3.1,2.95,2.8,3.2
+Surgery,Surgery - Inpatient,3.35,2.8,3.2,3.05,3.3,3.15
+Surgery,Surgery - Ambulatory,3.2,2.5,3.25,2.8,3.25,3.3
+Medicine,Medicine - OVERALL,3.4,3.0,3.3,3.1,3.2,3.0
+Medicine,Medicine - General,3.35,2.85,3.5,3.05,3.2,3
+Medicine,Medicine - Inpatient,3.7,2.95,3.2,3.1,3.1,3.1
+Medicine,Medicine - Ambulatory,3.25,3.05,3.3,3.15,3.35,3
+Emergency,Emergency - OVERALL,3.4,3.0,3.4,3.2,3.1,3.1
+Emergency,Emergency - Main ED,3.45,3.05,3.45,3.2,3.1,3.1
+Emergency,Emergency - Fast Track,3.35,2.95,3.2,3.05,3.15,3.05
+Emergency,Emergency - Observation,3.5,3.05,3.4,3.25,3.05,3.05
+Rehabilitation,Rehab - OVERALL,3.5,2.9,3.7,3.3,3.1,3.4
+Rehabilitation,Rehab - Inpatient,3.4,3.1,3.45,3.25,3.2,3.3
+Rehabilitation,Rehab - Outpatient,3.7,3,3.9,3.45,2.9,3.3
+Rehabilitation,Rehab - Complex Care,3.35,2.7,3.65,3.2,3.3,3.5
+Cancer Care,Cancer - OVERALL,3.7,3.1,3.7,3.4,3.4,3.3
+Cancer Care,Cancer - Medical Oncology,3.4,3,3.7,3.4,3.25,3.2
+Cancer Care,Cancer - Radiation,3.75,2.85,3.8,3.35,3.5,3.5
+Cancer Care,Cancer - Ambulatory,3.85,3.3,3.45,3.4,3.35,3.15
+,,,,,,,
+,OVERALL AVERAGE,3.436666667,2.913333333,3.436666667,3.176666667,3.186666667,3.193333333

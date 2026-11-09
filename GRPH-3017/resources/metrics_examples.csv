@@ -1,0 +1,7 @@
+Metric Examples,Suggested_Definition
+Average score by theme,Average of each pre-scored indicator (1-5)
+Theme comparison by program/unit,Average score by Clinical_Program or Unit
+Overall Safety Rating,Count or percentage by Overall_Safety_Rating
+Respondent mix,"Count by Role, Program, or Unit"
+Reported events,Distribution or average of Reported_Events_Past_Year
+Response rate,Responses_Count divided by Invited_Count

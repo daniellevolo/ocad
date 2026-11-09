@@ -1,0 +1,14 @@
+Column_Name,Corresponding Survey Question,Response Options,Definition,Notes_Interpretation
+Respondent_ID,N/A,,Unique synthetic respondent identifier.,One row represents one fictional staff respondent.
+Clinical_Program,N/A,,Clinical program associated with the respondent's unit.,Use for program-level comparison.
+Unit,N/A,,Unit associated with the respondent.,Each unit belongs to one clinical program
+Role,N/A,,Broad role category of the respondent.,Role categories are simplified for the exercise.
+Teamwork_Score,"In this unit, staff work together effectively as a team.",Strongly Disagree (Score 1); Disagree (Score 2); Neutral (Score 3); Agree (Score 4); Strongly Agree (Score 5),Pre-scored synthetic indicator of perceived teamwork.,Integer from 1 to 5; higher is more positive.
+Staffing_Score,There are enough staff to handle the workload in this unit.,Strongly Disagree (Score 1); Disagree (Score 2); Neutral (Score 3); Agree (Score 4); Strongly Agree (Score 5),Pre-scored synthetic indicator of staffing/workload perceptions.,Integer from 1 to 5; higher is more positive. It is not a validated scale.
+Communication_Openness_Score,Staff feel comfortable speaking up if they see something that may affect patient care.,Strongly Disagree (Score 1); Disagree (Score 2); Neutral (Score 3); Agree (Score 4); Strongly Agree (Score 5),Pre-scored synthetic indicator of comfort speaking up about safety concerns.,Integer from 1 to 5; higher is more positive.
+Leadership_Support_Score,My supervisor takes action to address patient safety concerns that are raised.,Strongly Disagree (Score 1); Disagree (Score 2); Neutral (Score 3); Agree (Score 4); Strongly Agree (Score 5),Pre-scored synthetic indicator of leadership support for safety.,Integer from 1 to 5; higher is more positive.
+Communication_About_Errors_Score,We are informed about errors that happen in this unit.,Strongly Disagree (Score 1); Disagree (Score 2); Neutral (Score 3); Agree (Score 4); Strongly Agree (Score 5),Pre-scored synthetic indicator of communication about errors.,Integer from 1 to 5; higher is more positive.
+Reporting_Culture_Score,"Staff are encouraged to report patient safety events, including mistakes that are caught before reaching the patient.",Strongly Disagree (Score 1); Disagree (Score 2); Neutral (Score 3); Agree (Score 4); Strongly Agree (Score 5),Pre-scored synthetic indicator of perceived openness/support for reporting events.,Integer from 1 to 5; higher is more positive. 
+Overall_Safety_Rating,How would you rate your unit on overall patient safety?,Poor; Fair; Good; Very Good; Excellent,Respondent's overall synthetic rating of patient safety.,"Categorical: Poor, Fair, Good, Very Good, Excellent."
+Reported_Events_Past_Year,How many events did you report last year,,Number of events the respondent says they reported in the past year.,Self-reported count; not a measure of event incidence or reporting performance by itself.
+

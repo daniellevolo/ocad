@@ -1,0 +1,21 @@
+Clinical_Program,Unit,Sum of Reported Events
+Surgery,Surgery - OVERALL,134
+Surgery,Surgery - OR,50
+Surgery,Surgery - Inpatient,30
+Surgery,Surgery - Ambulatory,54
+Medicine,Medicine - OVERALL,147
+Medicine,Medicine - General,50
+Medicine,Medicine - Inpatient,56
+Medicine,Medicine - Ambulatory,41
+Emergency,Emergency - OVERALL,111
+Emergency,Emergency - Main ED,28
+Emergency,Emergency - Fast Track,45
+Emergency,Emergency - Observation,38
+Rehabilitation,Rehab - OVERALL,150
+Rehabilitation,Rehab - Inpatient,42
+Rehabilitation,Rehab - Outpatient,48
+Rehabilitation,Rehab - Complex Care,60
+Cancer Care,Cancer - OVERALL,142
+Cancer Care,Cancer - Medical Oncology,37
+Cancer Care,Cancer - Radiation,55
+Cancer Care,Cancer - Ambulatory,50

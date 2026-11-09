@@ -1,0 +1,16 @@
+Clinical_Program,Unit,Invited_Count,Responses_Count,Response_Rate
+Surgery,Surgery - OR,36,20,56%
+Surgery,Surgery - Inpatient,32,20,63%
+Surgery,Surgery - Ambulatory,30,20,67%
+Medicine,Medicine - General,35,20,57%
+Medicine,Medicine - Inpatient,38,20,53%
+Medicine,Medicine - Ambulatory,40,20,50%
+Emergency,Emergency - Main ED,41,20,49%
+Emergency,Emergency - Fast Track,28,20,71%
+Emergency,Emergency - Observation,43,20,47%
+Rehabilitation,Rehab - Inpatient,31,20,65%
+Rehabilitation,Rehab - Outpatient,42,20,48%
+Rehabilitation,Rehab - Complex Care,44,20,45%
+Cancer Care,Cancer - Medical Oncology,28,20,71%
+Cancer Care,Cancer - Radiation,39,20,51%
+Cancer Care,Cancer - Ambulatory,34,20,59%
