@@ -18,27 +18,7 @@
     </header>
 
     <main id="main-content" class="page-shell">
-      <section class="page-heading" aria-labelledby="page-title">
-        <div>
-          <p class="eyebrow">Patient safety · Staff perceptions</p>
-          <h1 id="page-title">Culture at a glance</h1>
-          <p class="page-intro">Explore survey strengths and areas leaders may want to investigate.</p>
-        </div>
-        <div class="filters" aria-label="Dashboard filters">
-          <label>
-            <span>Clinical program</span>
-            <select id="program-filter" disabled>
-              <option>Loading programs…</option>
-            </select>
-          </label>
-          <label>
-            <span>Unit</span>
-            <select id="unit-filter" disabled>
-              <option>Loading units…</option>
-            </select>
-          </label>
-        </div>
-      </section>
+      <nav id="program-tabs" class="program-tabs" role="tablist" aria-label="Clinical program"></nav>
 
       <p id="load-status" class="load-status" role="status" aria-live="polite">Loading dashboard data…</p>
       <section id="load-error" class="load-error" role="alert" hidden>
@@ -47,7 +27,7 @@
         <p>Serve this folder over HTTP (for example, run <code>python3 -m http.server 8000</code> here) and open <code>http://localhost:8000</code>.</p>
       </section>
 
-      <div id="dashboard-grid" class="dashboard-grid" hidden>
+      <div id="dashboard-grid" class="dashboard-grid" role="tabpanel" hidden>
         <section class="card rating-panel" aria-labelledby="rating-title">
           <div class="card-heading">
             <div>
@@ -79,9 +59,6 @@
           <div class="scores-layout">
             <div class="score-main">
               <div id="score-chart" class="score-chart" aria-label="Average safety culture scores"></div>
-              <fieldset class="score-programs" id="score-programs">
-                <legend>Clinical program</legend>
-              </fieldset>
             </div>
             <aside class="score-highlights" aria-label="Score highlights">
               <div class="highlight highlight-positive">
@@ -140,24 +117,6 @@
           <div id="unit-list" class="unit-list"></div>
         </section>
       </div>
-
-      <section id="guide-notes" class="card guide-panel" aria-labelledby="guide-title" hidden>
-        <div>
-          <p class="eyebrow">Read with care</p>
-          <h2 id="guide-title">About this dataset</h2>
-          <p id="data-limitations"></p>
-          <p id="data-interpretation"></p>
-        </div>
-        <details class="metric-definitions">
-          <summary>Metric definitions</summary>
-          <dl id="metric-definitions-list"></dl>
-        </details>
-      </section>
-
-      <footer class="page-footer">
-        <span>Source: provided synthetic safety-culture CSVs</span>
-        <span id="updated-scope"></span>
-      </footer>
     </main>
   </body>
 </html>

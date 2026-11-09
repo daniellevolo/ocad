@@ -5,8 +5,6 @@ const FILES = {
   events: "resources/reported_events_sum.csv",
   participation: "resources/unit_participation.csv",
   dictionary: "resources/data_dictionary.csv",
-  metrics: "resources/metrics_examples.csv",
-  guide: "resources/student_guide.csv",
 };
 
 const SCORE_FIELDS = [
@@ -34,15 +32,12 @@ const RESPONSE_LEVELS = [
 const OVERALL_SCOPE = "__program_overall__";
 
 const elements = {
-  program: document.querySelector("#program-filter"),
-  unit: document.querySelector("#unit-filter"),
+  programTabs: document.querySelector("#program-tabs"),
   status: document.querySelector("#load-status"),
   error: document.querySelector("#load-error"),
   errorMessage: document.querySelector("#load-error-message"),
   grid: document.querySelector("#dashboard-grid"),
-  guide: document.querySelector("#guide-notes"),
   scoreChart: document.querySelector("#score-chart"),
-  scorePrograms: document.querySelector("#score-programs"),
   strongestName: document.querySelector("#strongest-name"),
   strongestValue: document.querySelector("#strongest-value"),
   lowestName: document.querySelector("#lowest-name"),
@@ -58,14 +53,10 @@ const elements = {
   participationValue: document.querySelector("#participation-value"),
   participationCount: document.querySelector("#participation-count"),
   unitList: document.querySelector("#unit-list"),
-  limitations: document.querySelector("#data-limitations"),
-  interpretation: document.querySelector("#data-interpretation"),
-  metricDefinitions: document.querySelector("#metric-definitions-list"),
-  updatedScope: document.querySelector("#updated-scope"),
 };
 
 let data;
-let selectedUnit = OVERALL_SCOPE;
+let selectedProgram;
 
 function parseCSV(text) {
   const rows = [];
@@ -168,9 +159,8 @@ function readData(records) {
   const dictionary = Object.fromEntries(records.dictionary
     .filter((record) => record.Column_Name)
     .map((record) => [record.Column_Name, record]));
-  const guide = Object.fromEntries(records.guide.filter((record) => record.Topic).map((record) => [record.Topic, record.Guidance]));
 
-  return { programs, averages, scoreCounts, ratings, eventRows, participationRows, dictionary, guide, metrics: records.metrics };
+  return { programs, averages, scoreCounts, ratings, eventRows, participationRows, dictionary };
 }
 
 function sum(values) {
@@ -221,48 +211,30 @@ function formatNumber(value, digits = 1) {
 }
 
 function fillProgramFilter() {
-  elements.program.replaceChildren();
-  for (const program of data.programs) {
-    const option = document.createElement("option");
-    option.value = program;
-    option.textContent = program;
-    elements.program.append(option);
-
-    const label = document.createElement("label");
-    const radio = document.createElement("input");
-    radio.type = "radio";
-    radio.name = "score-program";
-    radio.value = program;
-    const text = document.createElement("span");
-    text.textContent = program;
-    label.append(radio, text);
-    elements.scorePrograms.append(label);
-  }
-  elements.program.value = data.programs.includes("Surgery") ? "Surgery" : data.programs[0];
-  elements.program.disabled = false;
+  elements.programTabs.replaceChildren();
+  data.programs.forEach((program, index) => {
+    const tab = document.createElement("button");
+    tab.type = "button";
+    tab.id = `program-tab-${index}`;
+    tab.className = "program-tab";
+    tab.setAttribute("role", "tab");
+    tab.setAttribute("aria-selected", "false");
+    tab.tabIndex = -1;
+    tab.dataset.program = program;
+    tab.textContent = program;
+    elements.programTabs.append(tab);
+  });
+  selectedProgram = data.programs.includes("Surgery") ? "Surgery" : data.programs[0];
+  updateProgramTabs();
 }
 
-function fillUnitFilter(program) {
-  const actualUnits = data.participationRows
-    .filter((record) => record.Clinical_Program === program)
-    .map((record) => record.Unit);
-  const previousUnit = selectedUnit;
-  elements.unit.replaceChildren();
-
-  const overallOption = document.createElement("option");
-  overallOption.value = OVERALL_SCOPE;
-  overallOption.textContent = "Program total";
-  elements.unit.append(overallOption);
-  for (const unit of actualUnits) {
-    const option = document.createElement("option");
-    option.value = unit;
-    option.textContent = unit;
-    elements.unit.append(option);
+function updateProgramTabs() {
+  for (const tab of elements.programTabs.querySelectorAll('[role="tab"]')) {
+    const selected = tab.dataset.program === selectedProgram;
+    tab.setAttribute("aria-selected", String(selected));
+    tab.tabIndex = selected ? 0 : -1;
+    if (selected) elements.grid.setAttribute("aria-labelledby", tab.id);
   }
-
-  selectedUnit = actualUnits.includes(previousUnit) ? previousUnit : OVERALL_SCOPE;
-  elements.unit.value = selectedUnit;
-  elements.unit.disabled = actualUnits.length === 0;
 }
 
 function renderRating(program) {
@@ -406,55 +378,26 @@ function renderActivity(program, unit) {
   const unitRows = data.participationRows.filter((record) => record.Clinical_Program === program);
   elements.unitList.replaceChildren();
   for (const record of unitRows) {
-    const button = document.createElement("button");
-    button.className = "unit-row";
-    button.type = "button";
-    button.dataset.unit = record.Unit;
-    button.setAttribute("aria-pressed", String(record.Unit === unit));
+    const row = document.createElement("div");
+    row.className = "unit-row";
     const name = document.createElement("span");
     name.className = "unit-name";
     name.textContent = record.Unit;
     const metrics = document.createElement("span");
     metrics.className = "unit-metrics";
     metrics.textContent = `${getEventCount(program, record.Unit)} events · ${record.Response_Rate}`;
-    button.append(name, metrics);
-    button.addEventListener("click", () => {
-      elements.unit.value = record.Unit;
-      selectedUnit = record.Unit;
-      renderDashboard();
-    });
-    elements.unitList.append(button);
-  }
-}
-
-function renderGuide() {
-  setText(elements.limitations, data.guide["Data limitations"] ?? "");
-  setText(elements.interpretation, data.guide.Interpretation ?? "");
-  elements.metricDefinitions.replaceChildren();
-  for (const record of data.metrics) {
-    if (!record["Metric Examples"]) continue;
-    const wrapper = document.createElement("div");
-    const term = document.createElement("dt");
-    term.textContent = record["Metric Examples"];
-    const definition = document.createElement("dd");
-    definition.textContent = record.Suggested_Definition;
-    wrapper.append(term, definition);
-    elements.metricDefinitions.append(wrapper);
+    row.append(name, metrics);
+    elements.unitList.append(row);
   }
 }
 
 function renderDashboard() {
-  const program = elements.program.value;
-  const unit = elements.unit.value || OVERALL_SCOPE;
-  for (const radio of elements.scorePrograms.querySelectorAll('input[name="score-program"]')) {
-    radio.checked = radio.value === program;
-  }
-  selectedUnit = unit;
+  const program = selectedProgram;
+  const unit = OVERALL_SCOPE;
   renderRating(program);
   renderScores(program, unit);
   renderDistribution(program);
   renderActivity(program, unit);
-  setText(elements.updatedScope, `${program} · ${unit === OVERALL_SCOPE ? "Program total" : unit}`);
 }
 
 async function init() {
@@ -464,24 +407,35 @@ async function init() {
     const keys = Object.keys(FILES);
     data = readData(Object.fromEntries(keys.map((key, index) => [key, results[index]])));
     fillProgramFilter();
-    fillUnitFilter(elements.program.value);
-    renderGuide();
     renderDashboard();
     function changeProgram() {
-      fillUnitFilter(elements.program.value);
       renderDashboard();
     }
-    elements.program.addEventListener("change", changeProgram);
-    elements.scorePrograms.addEventListener("change", (event) => {
-      if (event.target instanceof HTMLInputElement && event.target.name === "score-program") {
-        elements.program.value = event.target.value;
+    elements.programTabs.addEventListener("click", (event) => {
+      if (event.target instanceof HTMLButtonElement && event.target.dataset.program) {
+        selectedProgram = event.target.dataset.program;
+        updateProgramTabs();
         changeProgram();
       }
     });
-    elements.unit.addEventListener("change", renderDashboard);
+    elements.programTabs.addEventListener("keydown", (event) => {
+      const tabs = [...elements.programTabs.querySelectorAll('[role="tab"]')];
+      const currentIndex = tabs.indexOf(document.activeElement);
+      let nextIndex;
+      if (event.key === "ArrowRight") nextIndex = (currentIndex + 1) % tabs.length;
+      else if (event.key === "ArrowLeft") nextIndex = (currentIndex - 1 + tabs.length) % tabs.length;
+      else if (event.key === "Home") nextIndex = 0;
+      else if (event.key === "End") nextIndex = tabs.length - 1;
+      if (nextIndex !== undefined) {
+        event.preventDefault();
+        selectedProgram = tabs[nextIndex].dataset.program;
+        updateProgramTabs();
+        tabs[nextIndex].focus();
+        changeProgram();
+      }
+    });
     elements.status.hidden = true;
     elements.grid.hidden = false;
-    elements.guide.hidden = false;
   } catch (error) {
     elements.status.hidden = true;
     elements.error.hidden = false;

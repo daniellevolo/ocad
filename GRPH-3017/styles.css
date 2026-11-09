@@ -85,14 +85,6 @@ select {
   padding: 38px 28px 30px;
 }
 
-.page-heading {
-  display: flex;
-  align-items: flex-end;
-  justify-content: space-between;
-  gap: 28px;
-  margin-bottom: 25px;
-}
-
 .eyebrow {
   margin: 0 0 8px;
   color: var(--muted);
@@ -103,17 +95,9 @@ select {
   text-transform: uppercase;
 }
 
-h1,
 h2,
 p {
   margin-top: 0;
-}
-
-h1 {
-  margin-bottom: 7px;
-  font-size: clamp(29px, 3vw, 39px);
-  letter-spacing: -.045em;
-  line-height: 1.08;
 }
 
 h2 {
@@ -123,44 +107,42 @@ h2 {
   line-height: 1.25;
 }
 
-.page-intro {
-  margin: 0;
-  color: var(--muted-dark);
-  font-size: 14px;
-}
-
-.filters {
-  display: flex;
-  gap: 10px;
-  align-items: flex-end;
-}
-
-.filters label {
-  display: grid;
-  gap: 7px;
-  color: var(--muted-dark);
-  font-size: 11px;
-  font-weight: 700;
-}
-
-.filters select {
-  min-width: 165px;
-  height: 42px;
-  padding: 0 34px 0 13px;
-  border: 1px solid #d5dce7;
-  border-radius: 10px;
-  background: var(--paper);
-  color: var(--ink);
-  font-size: 13px;
-  font-weight: 650;
-}
-
-.filters select:focus-visible,
 button:focus-visible,
 a:focus-visible,
 summary:focus-visible {
   outline: 3px solid #96add4;
   outline-offset: 3px;
+}
+
+.program-tabs {
+  display: flex;
+  gap: 14px;
+  overflow-x: auto;
+  padding: 0 16px;
+  border-bottom: 5px solid #a9bfdc;
+  scrollbar-width: thin;
+}
+
+.program-tabs:empty {
+  display: none;
+}
+
+.program-tab {
+  flex: 0 0 auto;
+  min-height: 38px;
+  padding: 8px 18px 7px;
+  border: 0;
+  border-radius: 11px 11px 0 0;
+  background: #e4e9f0;
+  color: var(--muted-dark);
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.program-tab[aria-selected="true"] {
+  background: var(--blue-soft);
+  color: var(--paper);
 }
 
 .load-status {
@@ -402,40 +384,6 @@ summary:focus-visible {
   overflow-wrap: anywhere;
 }
 
-.score-programs {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 12px 20px;
-  margin: 15px 0 0;
-  padding: 14px 0 0;
-  border: 0;
-  border-top: 1px solid var(--line);
-}
-
-.score-programs legend {
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  overflow: hidden;
-  clip-path: inset(50%);
-  white-space: nowrap;
-}
-
-.score-programs label {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  color: var(--muted-dark);
-  font-size: 11px;
-  font-weight: 700;
-  cursor: pointer;
-}
-
-.score-programs input {
-  margin: 0;
-  accent-color: var(--navy);
-}
-
 .score-highlights {
   display: grid;
   align-content: center;
@@ -636,61 +584,6 @@ summary:focus-visible {
   white-space: nowrap;
 }
 
-.guide-panel {
-  display: grid;
-  grid-template-columns: minmax(0, 1.1fr) minmax(280px, .9fr);
-  gap: 28px;
-  margin-top: 17px;
-  padding: 21px 25px;
-}
-
-.guide-panel h2 {
-  margin-bottom: 11px;
-}
-
-.guide-panel p:not(.eyebrow) {
-  margin: 0 0 8px;
-  color: var(--muted-dark);
-  font-size: 11px;
-  line-height: 1.5;
-}
-
-.metric-definitions summary {
-  color: var(--ink);
-  cursor: pointer;
-  font-size: 12px;
-  font-weight: 750;
-}
-
-.metric-definitions dl {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 7px;
-  margin: 11px 0 0;
-}
-
-.metric-definitions dt {
-  color: var(--ink);
-  font-size: 10px;
-  font-weight: 750;
-}
-
-.metric-definitions dd {
-  margin: 2px 0 0;
-  color: var(--muted-dark);
-  font-size: 10px;
-  line-height: 1.4;
-}
-
-.page-footer {
-  display: flex;
-  justify-content: space-between;
-  gap: 12px;
-  padding: 17px 3px 0;
-  color: var(--muted);
-  font-size: 10px;
-}
-
 .load-error {
   padding: 20px 24px;
   border: 1px solid #ebc7cc;
@@ -757,24 +650,6 @@ summary:focus-visible {
 
   .page-shell {
     padding: 27px 16px 22px;
-  }
-
-  .page-heading {
-    display: block;
-  }
-
-  .filters {
-    margin-top: 20px;
-  }
-
-  .filters label {
-    flex: 1;
-    min-width: 0;
-  }
-
-  .filters select {
-    width: 100%;
-    min-width: 0;
   }
 
   .dashboard-grid {
@@ -860,16 +735,6 @@ summary:focus-visible {
     display: block;
     max-height: 230px;
   }
-
-  .guide-panel {
-    grid-template-columns: 1fr;
-    gap: 12px;
-    padding: 20px;
-  }
-
-  .page-footer {
-    flex-direction: column;
-  }
 }
 
 @media (max-width: 420px) {
@@ -885,17 +750,14 @@ summary:focus-visible {
     font-size: 16px;
   }
 
-  .filters {
+  .program-tabs {
     gap: 8px;
+    padding: 0 8px;
   }
 
-  .filters label {
-    font-size: 10px;
-  }
-
-  .filters select {
-    height: 40px;
-    padding-left: 10px;
+  .program-tab {
+    min-height: 36px;
+    padding: 7px 12px 6px;
     font-size: 11px;
   }
 
