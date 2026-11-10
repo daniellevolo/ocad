@@ -238,7 +238,7 @@ function summarizeRating(program) {
   const ratings = getProgramRatings(program);
   const total = sum(ratings.map((rating) => rating.count));
   const weighted = sum(ratings.map((rating) => rating.count * rating.value));
-  return { ratings, total, average: total ? weighted / total : 0 };
+  return { ratings, total, average: total ? (weighted / total) * 2 : 0 };
 }
 
 function renderRating() {
@@ -268,7 +268,7 @@ function renderRating() {
       });
       ring.style.background = `conic-gradient(${segments.join(", ")})`;
       ring.setAttribute("role", "img");
-      ring.setAttribute("aria-label", `${formatNumber(average)} out of 5 average safety rating from ${total} responses.`);
+      ring.setAttribute("aria-label", `${formatNumber(average)} out of 10 average safety rating from ${total} responses.`);
       const caption = document.createElement("span");
       caption.textContent = "Avg. Safety Rating";
       const center = document.createElement("div");
@@ -298,7 +298,7 @@ function renderRating() {
       details.append(name, legend);
       item.append(details, ring);
     } else {
-      ring.style.setProperty("--fill", `${(average / 5) * 100}%`);
+      ring.style.setProperty("--fill", `${(average / 10) * 100}%`);
       value.textContent = formatNumber(average);
       ring.append(value);
       item.append(name, ring);

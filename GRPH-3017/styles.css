@@ -600,7 +600,7 @@ summary:focus-visible {
 
 .event-total {
   display: flex;
-  align-items: flex-end;
+  align-items: flex-start;
   justify-content: space-between;
   gap: 12px;
   margin-top: 22px;
