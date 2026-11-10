@@ -135,7 +135,13 @@ function readData(records) {
     if (!currentProgram || score === null) continue;
     scoreCounts[currentProgram] ??= {};
     scoreCounts[currentProgram][score] = Object.fromEntries(
-      SCORE_FIELDS.map((field) => [field, asNumber(record[field]) ?? 0]),
+      SCORE_FIELDS.map((field) => {
+        const count = record[field] ? asNumber(record[field]) : null;
+        if (!Number.isInteger(count) || count < 0) {
+          throw new Error(`Missing or invalid response count for ${currentProgram}, ${field}, score ${score}.`);
+        }
+        return [field, count];
+      }),
     );
   }
 
@@ -309,6 +315,7 @@ function renderRating() {
 
 function renderScores(program, unit) {
   const row = getProgramAverages(program, unit);
+  const countsByScore = unit === OVERALL_SCOPE ? getProgramResponseCounts(program) : null;
   const scores = SCORE_FIELDS.map((field) => ({
     field,
     value: row ? asNumber(row[field]) ?? 0 : 0,
@@ -346,8 +353,22 @@ function renderScores(program, unit) {
     elements.scoreChart.append(column);
   }
 
-  const mostPositive = scores.reduce((best, current) => current.value > best.value ? current : best, scores[0]);
-  const opportunity = scores.reduce((lowest, current) => current.value < lowest.value ? current : lowest, scores[0]);
+  const rankedScores = scores.map((score) => {
+    if (!countsByScore) return { ...score, rankingValue: score.value };
+    const counts = RESPONSE_LEVELS.map((level) => {
+      const count = countsByScore[level.value]?.[score.field];
+      if (!Number.isInteger(count) || count < 0) {
+        throw new Error(`Missing or invalid response count for ${program}, ${score.field}, score ${level.value}.`);
+      }
+      return { value: level.value, count };
+    });
+    const total = sum(counts.map((entry) => entry.count));
+    if (!total) throw new Error(`No responses for ${program}, ${score.field}.`);
+    const weighted = sum(counts.map((entry) => entry.value * entry.count));
+    return { ...score, rankingValue: weighted / total };
+  });
+  const mostPositive = rankedScores.reduce((best, current) => current.rankingValue > best.rankingValue ? current : best);
+  const opportunity = rankedScores.reduce((lowest, current) => current.rankingValue < lowest.rankingValue ? current : lowest);
   setText(elements.strongestName, displayName(mostPositive.field));
   setText(elements.strongestValue, formatNumber(mostPositive.value));
   setText(elements.lowestName, displayName(opportunity.field));

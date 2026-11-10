@@ -21,3 +21,5 @@ Browse the data files and reference images at <http://localhost:8000/resources/>
 The dashboard uses only the supplied synthetic, cross-sectional data. Reported event totals are self-reported and should not be interpreted as event incidence or as a direct measure of safety culture.
 
 The safety-rating mean and distribution are recalculated from category counts because the summary row in the source CSV includes values outside the 1–5 rating scale.
+
+The strongest and lowest program indicators are ranked using unrounded weighted averages from `resources/survey_scores_count.csv`; displayed scores come from `resources/survey_scores_average.csv`.
