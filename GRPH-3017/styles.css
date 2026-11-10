@@ -574,12 +574,16 @@ summary:focus-visible {
   flex-direction: column;
   gap: 2px;
   padding: 10px 12px;
-  background: linear-gradient(135deg, #f7f7f7 55%, #dfe6f1);
+  background: linear-gradient(var(--tile-dir, to bottom right), #d3dcec 0%, #f7f7f7 60%);
 }
+
+.event-tile:nth-child(4n + 1) { --tile-dir: to bottom right; }
+.event-tile:nth-child(4n + 2) { --tile-dir: to top right; }
+.event-tile:nth-child(4n + 3) { --tile-dir: to top left; }
+.event-tile:nth-child(4n) { --tile-dir: to bottom left; }
 
 .event-tile.is-primary {
   grid-row: 1 / -1;
-  background: linear-gradient(160deg, #e3e9f3 0%, #f7f7f7 45%);
 }
 
 .event-tile-name {
