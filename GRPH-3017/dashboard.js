@@ -389,7 +389,25 @@ function renderDistribution(program) {
     row.className = "distribution-row";
     const label = document.createElement("span");
     label.className = "distribution-label";
-    label.textContent = displayName(field);
+    const labelText = document.createElement("span");
+    labelText.textContent = displayName(field);
+    label.append(labelText);
+    const question = data.dictionary[field]?.["Corresponding Survey Question"];
+    if (question && question !== "N/A") {
+      const questionButton = document.createElement("button");
+      questionButton.className = "question-button";
+      questionButton.type = "button";
+      questionButton.textContent = "?";
+      questionButton.setAttribute("aria-label", `Survey question for ${displayName(field)}`);
+      questionButton.setAttribute("aria-describedby", `question-${field}`);
+      questionButton.addEventListener("click", () => questionButton.focus());
+      const tooltip = document.createElement("span");
+      tooltip.className = "question-tooltip";
+      tooltip.id = `question-${field}`;
+      tooltip.setAttribute("role", "tooltip");
+      tooltip.textContent = question;
+      label.prepend(questionButton, tooltip);
+    }
     const bar = document.createElement("div");
     bar.className = "distribution-bar";
     bar.setAttribute("role", "img");

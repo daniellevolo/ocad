@@ -4,6 +4,8 @@ A dependency-free, screenshot-inspired dashboard built with HTML, CSS, and vanil
 
 Choose a clinical program using either the dashboard filter or the radio buttons beneath the average-score chart; both update the dashboard together. The unit filter applies within the selected program.
 
+In Survey Results, hover over, focus, or tap the question-mark icon beside a theme to see its survey question.
+
 The header logo is cropped from the provided `resources/screenshot.png` and saved separately as `resources/uhn-logo.png`.
 
 ## Run locally
