@@ -32,7 +32,7 @@ const RESPONSE_LEVELS = [
 const OVERALL_SCOPE = "__program_overall__";
 
 const elements = {
-  programTabs: document.querySelector("#program-tabs"),
+  programTabs: document.querySelector("#program-tab-list"),
   status: document.querySelector("#load-status"),
   error: document.querySelector("#load-error"),
   errorMessage: document.querySelector("#load-error-message"),
